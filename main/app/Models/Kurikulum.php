@@ -11,6 +11,7 @@ class Kurikulum extends Model
 
     protected $table = 'kurikulum';
     protected $primaryKey = 'id_kurikulum';
+    public $incrementing = false;
 
     protected $fillable = [
       'id_kurikulum',

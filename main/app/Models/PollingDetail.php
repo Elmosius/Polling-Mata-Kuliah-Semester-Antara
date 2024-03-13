@@ -11,6 +11,7 @@ class PollingDetail extends Model
 
     protected $table = 'polling_detail';
     protected $primaryKey = 'id_pollingDetail';
+    public $incrementing = false;
 
     protected $fillable = [
       'id_pollingDetail',

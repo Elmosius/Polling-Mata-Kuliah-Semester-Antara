@@ -11,6 +11,7 @@ class ProgramStudi extends Model
 
     protected $table = 'program_studi';
     protected $primaryKey = 'id_programStudi';
+    public $incrementing = false;
 
     protected $fillable = [
       'id_programStudi',

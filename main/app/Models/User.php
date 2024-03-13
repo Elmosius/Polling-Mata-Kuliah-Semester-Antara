@@ -20,6 +20,9 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $primaryKey = 'user_id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'id_user',
         'nama_user',

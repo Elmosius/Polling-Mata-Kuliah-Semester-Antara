@@ -11,6 +11,7 @@ class Polling extends Model
 
     protected $table = 'polling';
     protected $primaryKey = 'id_polling';
+    public $incrementing = false;
 
     protected $fillable = [
         'id_polling',
