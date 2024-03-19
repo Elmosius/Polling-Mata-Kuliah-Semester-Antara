@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="df385b7c-1cb3-45bc-854e-47e5ef6ba1c5" name="Changes" comment="migration 5,model 2,controller (cm bkin file)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="df385b7c-1cb3-45bc-854e-47e5ef6ba1c5" name="Changes" comment="migration 5,model 2,controller (cm bkin file)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -275,6 +273,9 @@
       <path value="$PROJECT_DIR$/main/vendor/graham-campbell/result-type" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -293,6 +294,10 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+<<<<<<< HEAD
+    &quot;last_opened_file_path&quot;: &quot;D:/sem 4 laravel/Pert03&quot;,
+=======
+>>>>>>> 985b7f6a67cf604bebbd899b6a3319c2b8fa481e
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -303,6 +308,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\PWL_Project_UTS\main" />
       <recent name="D:\xampp\htdocs\PWL_Project_UTS\main\database\migrations" />
     </key>
   </component>
@@ -329,7 +335,12 @@
       <updated>1709627316609</updated>
       <workItem from="1709627317793" duration="598000" />
       <workItem from="1710211526285" duration="351000" />
-      <workItem from="1710242694250" duration="8468000" />
+      <workItem from="1710242694250" duration="11937000" />
+      <workItem from="1710297158292" duration="1737000" />
+      <workItem from="1710299303125" duration="2048000" />
+      <workItem from="1710301892610" duration="318000" />
+      <workItem from="1710302223021" duration="2360000" />
+      <workItem from="1710309843483" duration="2733000" />
     </task>
     <task id="LOCAL-00001" summary="migration 5,model 2,controller (cm bkin file)">
       <option name="closed" value="true" />
@@ -339,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710253831031</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="migration 5,model 2,controller (cm bkin file)">
+      <option name="closed" value="true" />
+      <created>1710254622683</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710254622683</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -350,7 +369,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

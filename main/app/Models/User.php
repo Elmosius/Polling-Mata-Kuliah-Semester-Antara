@@ -17,10 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+
+    public $incrementing = false;
+
     protected $fillable = [
-        'name',
+        'id_user',
+        'nama_user',
         'email',
         'password',
+        'id_role',
     ];
 
     /**
@@ -42,4 +50,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, "id_role");
+    }
+
+    public function pollingDetail(){
+        return $this->hasMany(PollingDetail::class, "id_user");
+    }
 }
