@@ -14,14 +14,11 @@ return new class extends Migration
         Schema::create('mata_kuliah', function (Blueprint $table) {
             $table->string('id_mataKuliah',10)->primary();
             $table->string('nama_mataKuliah',45);
-<<<<<<< HEAD
-            $table->string('id_programStudi',5);
-            $table->foreign('id_programStudi')->references('id_programStudi')->on('program_studi');
-=======
->>>>>>> 985b7f6a67cf604bebbd899b6a3319c2b8fa481e
+            $table->string('id_program_studi',5);
+            $table->foreign('id_program_studi')->references('id_program_studi')->on('program_studi');
             $table->integer('sks');
-            $table->string('hari',7);
-            $table->time('jam');
+            $table->integer('id_semester');
+            $table->foreign('id_semester')->references('id_semester')->on('semester');
             $table->string('id_kurikulum',5);
             $table->foreign('id_kurikulum')->references('id_kurikulum')->on('kurikulum');
             $table->timestamps();
