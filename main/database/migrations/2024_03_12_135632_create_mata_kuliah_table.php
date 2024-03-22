@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('id_program_studi',5);
             $table->foreign('id_program_studi')->references('id_program_studi')->on('program_studi');
             $table->integer('sks');
-            $table->integer('id_semester');
+            $table->string('id_semester',5);
             $table->foreign('id_semester')->references('id_semester')->on('semester');
             $table->string('id_kurikulum',5);
             $table->foreign('id_kurikulum')->references('id_kurikulum')->on('kurikulum');
