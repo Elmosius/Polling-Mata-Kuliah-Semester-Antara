@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('polling_mahasiswa', function (Blueprint $table) {
             $table->string('id_polling_mahasiswa',5)->primary();
-            $table->string('id_user',5);
+            $table->string('id_user',10);
             $table->foreign('id_user')->references('id_user')->on('users');
             $table->integer('jumlah_mata_kuliah');
             $table->integer('total_sks');

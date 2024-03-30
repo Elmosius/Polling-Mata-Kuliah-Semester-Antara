@@ -19,6 +19,6 @@ class Kurikulum extends Model
     ];
 
     public function mataKuliah(){
-        return $this->hasMany(MataKuliah::class, "id_kurikulum");
+        return $this->hasMany(MataKuliah::class);
     }
 }

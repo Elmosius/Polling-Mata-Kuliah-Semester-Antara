@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
@@ -19,8 +23,7 @@ class User extends Authenticatable
      */
 
     protected $table = 'users';
-    protected $primaryKey = 'user_id';
-
+    protected $primaryKey = 'id_user';
     public $incrementing = false;
 
     protected $fillable = [
@@ -29,6 +32,7 @@ class User extends Authenticatable
         'email',
         'password',
         'id_role',
+        'id_program_studi',
     ];
 
     /**
@@ -51,11 +55,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role(){
+    public function role(): BelongsTo{
         return $this->belongsTo(Role::class, "id_role");
     }
 
-    public function pollingDetail(){
+    public function programStudi(): BelongsTo{
+        return $this->belongsTo(ProgramStudi::class, "id_program_studi");
+    }
+
+    public function pollingDetail(): HasMany{
         return $this->hasMany(PollingDetail::class, "id_user");
     }
 }
