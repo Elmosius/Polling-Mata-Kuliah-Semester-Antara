@@ -33,7 +33,7 @@
                         <td>{{$user->nama_user}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->role->nama_role}}</td>
-                        <td>{{$user->programStudi->nama_program_studi}}</td>
+                        <td>{{($user->programStudi->nama_program_studi) ?? '-'}}</td>
                         <td>
                             <a href="/dashboard/users/{{$user->id_user}}/edit" class="badge bg-warning">
                                 <span class="bi bi-pencil-square"></span>

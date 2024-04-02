@@ -9,26 +9,38 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('/') ? 'active': ''}}" aria-current="page" href="/">
+                    <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('/') ? 'active': ''}}"
+                       aria-current="page" href="/">
                         <svg class="bi">
                             <span class="bi bi-house"></span>
                         </svg>
                         Home
                     </a>
                 </li>
-                @can('kaprodi')
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/matakuliah') ? 'active': ''}}" href="/dashboard/mata-kuliah">
+                    <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/polling-matakuliah')
+                        ? 'active': ''}}" href="/dashboard/polling-matakuliah">
                         <svg class="bi">
                             <i class="bi bi-file-post"></i>
                         </svg>
-                        Mata Kuliah
+                        Polling Mata Kuliah
                     </a>
                 </li>
+                @can('kaprodi')
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/matakuliah') ? 'active': ''}}"
+                           href="/dashboard/mata-kuliah">
+                            <svg class="bi">
+                                <i class="bi bi-file-post"></i>
+                            </svg>
+                            Mata Kuliah
+                        </a>
+                    </li>
                 @endcan
                 @can('admin')
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/users') ? 'active': ''}}" href="/dashboard/users">
+                        <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/users') ? 'active': ''}}"
+                           href="/dashboard/users">
                             <svg class="bi">
                                 <i class="bi bi-file-post"></i>
                             </svg>

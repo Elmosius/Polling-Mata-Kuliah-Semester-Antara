@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('kaprodi');
     Route::resource('/dashboard/users', \App\Http\Controllers\UserController::class)
         ->middleware('admin');
+    Route::resource('/dashboard/polling-matakuliah', \App\Http\Controllers\PollingController::class)
+    ->except(['create', 'show']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

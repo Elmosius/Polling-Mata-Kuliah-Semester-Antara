@@ -10,14 +10,12 @@ class PollingDetail extends Model
     use HasFactory;
 
     protected $table = 'polling_detail';
-    protected $primaryKey = 'id_pollingDetail';
     public $incrementing = false;
 
     protected $fillable = [
-      'id_pollingDetail',
-      'jumlah',
-      'id_user',
       'id_polling',
+      'id_user',
+      'id_jadwal',
       'id_mataKuliah',
     ];
 

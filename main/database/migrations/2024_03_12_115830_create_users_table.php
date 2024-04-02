@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password',255);
             $table->string('id_role',5);
             $table->foreign('id_role')->references('id_role')->on('role');
-            $table->string('id_program_studi',5);
+            $table->string('id_program_studi',5)->nullable();
             $table->foreign('id_program_studi')->references('id_program_studi')->on('program_studi');
             $table->rememberToken();
             $table->timestamps();
