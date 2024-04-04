@@ -18,7 +18,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/polling-matakuliah')
+                    <a class="nav-link d-flex align-items-center gap-2 text-dark
+                    {{Request::is('dashboard/polling-matakuliah')
                         ? 'active': ''}}" href="/dashboard/polling-matakuliah">
                         <svg class="bi">
                             <i class="bi bi-file-post"></i>

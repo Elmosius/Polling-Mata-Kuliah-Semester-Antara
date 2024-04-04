@@ -165,11 +165,13 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{asset('https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js')}}"></script>
 <script src="{{asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')}}"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="{{asset('https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js')}}"></script>
 <script src="{{asset('/js/dashboard.js')}}"></script>
+@yield('js-tambahan')
 </body>
 </html>

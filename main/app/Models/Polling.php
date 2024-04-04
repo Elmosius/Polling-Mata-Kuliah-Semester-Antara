@@ -16,9 +16,9 @@ class Polling extends Model
 
     protected $fillable = [
         'id_polling',
-        'jumlah_sks',
-        'id_periode',
-        'jumlah_mata_kuliah'
+        'start_at',
+        'end_at',
+        'is_active',
     ];
 
     public function pollingDetail(): HasMany

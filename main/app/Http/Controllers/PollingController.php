@@ -17,12 +17,10 @@ class PollingController extends Controller
     public function index()
     {
         return view('polling.index',[
-            'data' => Polling::all(),
+            'datas' => Polling::all(),
             'mks' => MataKuliah::all(),
-            'semester' => semester::all(),
-            'ps' => ProgramStudi::all(),
-            'kurikulum' => Kurikulum::all()
         ]);
+//        return redirect('/dashboard/polling-matakuliah-detail');
     }
 
     /**
@@ -30,7 +28,9 @@ class PollingController extends Controller
      */
     public function create()
     {
-        //
+        return view('polling.create',[
+            'data' => Polling::all()
+        ]);
     }
 
     /**
@@ -38,7 +38,15 @@ class PollingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'id_polling' => 'required|max:5|unique:polling',
+            'start_at' => 'required|date',
+            'end_at' => 'required|date',
+            'is_active'=> 'required|max:2'
+        ]);
+
+        Polling::create($validateData);
+        return redirect('/dashboard/polling-matakuliah-detail')-> with('success','Polling Has Been Created',);
     }
 
     /**
@@ -55,11 +63,7 @@ class PollingController extends Controller
     public function edit(Polling $polling)
     {
         return view('polling.edit',[
-            'data' => Polling::all(),
-            'mks' => MataKuliah::all(),
-            'semester' => semester::all(),
-            'ps' => ProgramStudi::all(),
-            'kurikulum' => Kurikulum::all()
+            'datas' => $polling
         ]);
     }
 
@@ -76,6 +80,7 @@ class PollingController extends Controller
      */
     public function destroy(Polling $polling)
     {
-        //
+        Polling::destroy($polling->id_polling);
+        return redirect('/dashboard/polling-matakuliah-detail')-> with('success','Polling Has Been Deleted',);
     }
 }

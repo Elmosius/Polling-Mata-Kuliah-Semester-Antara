@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Kurikulum;
 use App\Models\ProgramStudi;
 use App\Models\Role;
 use App\Models\semester;
@@ -23,6 +24,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test user',
         //     'email' => 'test@example.com',
         // ]);
+
+        Kurikulum::create([
+            'id_kurikulum' => '1',
+            'tahun' => '2019'
+        ]);
+
+        Kurikulum::create([
+            'id_kurikulum' => '2',
+            'tahun' => '2020'
+        ]);
 
         Role::create([
             'id_role' => '1',

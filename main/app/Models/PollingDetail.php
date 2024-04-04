@@ -13,21 +13,23 @@ class PollingDetail extends Model
     public $incrementing = false;
 
     protected $fillable = [
-      'id_polling',
-      'id_user',
-      'id_jadwal',
-      'id_mataKuliah',
+        'id_polling',
+        'id_user',
+        'id_mataKuliah',
     ];
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsTo(User::class, "id_user");
     }
 
-    public function polling(){
+    public function polling()
+    {
         return $this->belongsTo(Polling::class, "id_polling");
     }
 
-    public function mataKuliah(){
+    public function mataKuliah()
+    {
         return $this->belongsTo(MataKuliah::class, "id_mataKuliah");
     }
 }

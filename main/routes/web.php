@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');
@@ -25,13 +24,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('dashboard.index');
     });
-
     Route::resource('/dashboard/mata-kuliah', \App\Http\Controllers\MataKuliahController::class)
         ->middleware('kaprodi');
+
     Route::resource('/dashboard/users', \App\Http\Controllers\UserController::class)
         ->middleware('admin');
+
     Route::resource('/dashboard/polling-matakuliah', \App\Http\Controllers\PollingController::class)
-    ->except(['create', 'show']);
+        ->except('show');
+
+//    Route::resource('/dashboard/polling-matakuliah-detail',
+//        \App\Http\Controllers\PollingDetailController::class)->only(['index','store']);
+
+//    Route::get('/dashboard/polling-matakuliah-detail/{polling}/results',
+//        [\App\Http\Controllers\PollingDetailController::class, 'results']);
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -39,5 +46,4 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
