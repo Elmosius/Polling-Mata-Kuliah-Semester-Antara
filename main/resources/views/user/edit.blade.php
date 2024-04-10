@@ -7,14 +7,15 @@
             <h3 class="h2">Create New User</h3>
         </div>
 
-        <form method="post" action="/dashboard/users">
+        <form method="post" action="/dashboard/users{{$datas->id_user}}">
+            @method('put')
             @csrf
             <div class="col-lg-5">
                 <div class="mb-3">
                     <label for="id_user" class="form-label">Id User</label>
                     <input type="text" class="form-control @error('id_user') is-invalid @enderror" id="id_user"
                            name="id_user" required autofocus
-                           value="{{ old('id_user') }}">
+                           value="{{ old('id_user', $datas->id_user) }}" readonly>
                     @error('id_user')
                     <div class="invalid-feedback">
                         {{$message}}
@@ -26,7 +27,7 @@
                     <label for="nama_user" class="form-label">Nama</label>
                     <input type="text" class="form-control @error('nama_user') is-invalid @enderror" id="nama_user" name="nama_user"
                            autofocus
-                           value="{{ old('nama_user') }}">
+                           value="{{ old('nama_user', $datas->nama_user) }}">
                     @error('nama_user')
                     <div class=" invalid-feedback">
                         {{$message}}
@@ -39,7 +40,7 @@
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                            name="email"
                            autofocus
-                           value="{{ old('email') }}">
+                           value="{{ old('email', $datas->email) }}">
                     @error('email')
                     <div class=" invalid-feedback">
                         {{$message}}
@@ -50,8 +51,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                           name="password" value="{{ old('password') }}">
-                           autofocus
+                           name="password" value="{{ old('password',$datas->password) }}" autofocus>
                     @error('password')
                     <div class=" invalid-feedback">
                         {{$message}}
@@ -63,7 +63,7 @@
                     <label for="password_confirmation" class="form-label">Confirm Password</label>
                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                            id="password_confirmation" name="password_confirmation" autofocus
-                           value="{{ old('password') }}">
+                           value="{{ old('password', $datas->password) }}">
                     @error('password_confirmation')
                     <div class="invalid-feedback">
                         {{$message}}
@@ -75,7 +75,7 @@
                     <label for="id_role" class="form-label">role</label>
                     <select class="form-select" name="id_role" required>
                         @foreach($roles as $user)
-                            @if(old('id_role') == $user->id_role)
+                            @if(old('id_role', $datas->id_role) == $user->id_role)
                                 <option value="{{$user->id_role}}"
                                         selected>{{$user->nama_role}}</option>
                             @else
@@ -89,7 +89,7 @@
                     <label for="id_program_studi" class="form-label">Kode Program Studi</label>
                     <select class="form-select" name="id_program_studi" required>
                         @foreach($kode_ps as $user)
-                            @if(old('id_program_studi') == $user->id_program_studi)
+                            @if(old('id_program_studi', $datas->id_program_studi) == $user->id_program_studi)
                                 <option value="{{$user->id_program_studi}}"
                                         selected>{{$user->nama_program_studi}}</option>
                             @else
@@ -99,7 +99,7 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Create User</button>
+                <button type="submit" class="btn btn-primary">Edit User</button>
             </div>
         </form>
         <canvas class="my-4 w-100" id="myChart" width="900" height="500"></canvas>

@@ -23,7 +23,7 @@ class Polling extends Model
 
     public function pollingDetail(): HasMany
     {
-        return $this->hasMany(PollingDetail::class, "id_polling");
+        return $this->hasMany(PollingDetail::class, 'id_polling');
     }
 
 

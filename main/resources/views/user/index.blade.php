@@ -14,16 +14,20 @@
         @endif
 
         <div class="table-responsive small col-lg-10">
-            <a href="/dashboard/users/create" class="text-decoration-none badge bg-success ms-1">Create New User</a>
+            @can('admin')
+                <a href="/dashboard/users/create" class="text-decoration-none badge bg-success ms-1">Create New User</a>
+            @endcan
             <table class="table table-striped table-sm mt-2">
                 <thead>
                 <tr>
-                    <th scope="col" >Id User</th>
+                    <th scope="col">Id User</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Program Studi</th>
-                    <th scope="col">Action</th>
+                    @can('admin')
+                        <th scope="col">Action</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +38,7 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->role->nama_role}}</td>
                         <td>{{($user->programStudi->nama_program_studi) ?? '-'}}</td>
+                        @can('admin')
                         <td>
                             <a href="/dashboard/users/{{$user->id_user}}/edit" class="badge bg-warning">
                                 <span class="bi bi-pencil-square"></span>
@@ -46,6 +51,7 @@
                                 </button>
                             </form>
                         </td>
+                        @endcan
                     </tr>
                 @endforeach
                 </tbody>

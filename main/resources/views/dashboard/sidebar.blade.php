@@ -19,8 +19,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 text-dark
-                    {{Request::is('dashboard/polling-matakuliah')
-                        ? 'active': ''}}" href="/dashboard/polling-matakuliah">
+                    {{Request::is('dashboard/polling')
+                        ? 'active': ''}}" href="/dashboard/polling">
                         <svg class="bi">
                             <i class="bi bi-file-post"></i>
                         </svg>
@@ -38,7 +38,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('admin')
+                @can('kaprodi')
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 text-dark {{Request::is('dashboard/users') ? 'active': ''}}"
                            href="/dashboard/users">

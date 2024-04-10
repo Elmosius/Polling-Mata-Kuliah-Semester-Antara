@@ -6,7 +6,8 @@
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h3 class="h2">Edit Mata Kuliah </h3>
         </div>
-        <form method="post" action="/dashboard/matakuliah/{{$mk->id_mataKuliah}}">
+
+        <form method="post" action="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}">
             @method('put')
             @csrf
             <div class="col-lg-5">
@@ -14,7 +15,7 @@
                     <label for="Kode MataKuliah" class="form-label">Kode Mata Kuliah</label>
                     <input type="text" class="form-control @error('id_mataKuliah') is-invalid @enderror"
                            id="id_mataKuliah"
-                           name="id_mataKuliah" readonly
+                           name="id_mataKuliah"
                            value="{{old('id_mataKuliah',$mk->id_mataKuliah)}}">
                     @error('id_mataKuliah')
                     <div class="invalid-feedback">
@@ -28,7 +29,7 @@
                            id="nama_mataKuliah"
                            name="nama_mataKuliah"
                            required autofocus
-                           value="{{ old('nama_mataKuliah') }}">
+                           value="{{ old('nama_mataKuliah', $mk->nama_mataKuliah) }}">
                     @error('nama_mataKuliah')
                     <div class=" invalid-feedback">
                         {{$message}}
@@ -40,7 +41,7 @@
                     <input type="number" class="form-control @error('sks') is-invalid @enderror" id="sks"
                            min="1" max="4"
                            name="sks" required autofocus
-                           value="{{ old('sks') }}" style="width: 200px;">
+                           value="{{ old('sks', $mk->sks) }}" style="width: 200px;">
                     @error('sks')
                     <div class="invalid-feedback">
                         {{$message}}
@@ -52,7 +53,7 @@
                     <label for="Semester" class="form-label">Semester</label>
                     <select class="form-select" name="id_semester" required>
                         @foreach($semester as $mk)
-                            @if(old('id_semester') == $mk->id_semester)
+                            @if(old('id_semester', $mk->id_semester) == $mk->id_semester)
                                 <option value="{{$mk->id_semester}}"
                                         selected>{{$mk->semester}}</option>
                             @else
@@ -66,7 +67,7 @@
                     <label for="Kode Program Studi" class="form-label">Kode Program Studi</label>
                     <select class="form-select" name="id_program_studi" required>
                         @foreach($ps as $mk)
-                            @if(old('kode_ps') == $mk->id_program_studi)
+                            @if(old('id_program_studi', $mk->id_program_studi) == $mk->id_program_studi)
                                 <option value="{{$mk->id_program_studi}}"
                                         selected>{{$mk->nama_program_studi}}</option>
                             @else
@@ -81,7 +82,7 @@
                     <label for="Tahun Kurikulum" class="form-label">Tahun</label>
                     <select class="form-select" name="id_kurikulum" required>
                         @foreach($kurikulum as $mk)
-                            @if(old('kode_ps') == $mk->id_kurikulum)
+                            @if(old('id_kurikulum', $mk->id_kurikulum) == $mk->id_kurikulum)
                                 <option value="{{$mk->id_kurikulum}}"
                                         selected>{{$mk->tahun}}</option>
                             @else
@@ -91,7 +92,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create Mata Kuliah</button>
+                <button type="submit" class="btn btn-primary">Edit Mata Kuliah</button>
             </div>
         </form>
         <canvas class="my-4 w-100" id="myChart" width="900" height="500"></canvas>
