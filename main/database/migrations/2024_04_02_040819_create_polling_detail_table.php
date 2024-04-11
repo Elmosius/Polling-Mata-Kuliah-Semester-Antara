@@ -12,12 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('polling_detail', function (Blueprint $table) {
-            $table->string('id_pollingDetail',5)->primary();
-            $table->integer('jumlah');
+            $table->string('id_polling',5);
+            $table->foreign('id_polling',5)->references('id_polling')->on('polling');
             $table->string('id_user',5);
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->string('id_jadwal',5);
-            $table->foreign('id_jadwal')->references('id_jadwal')->on('jadwal');
             $table->string('id_mataKuliah',10);
             $table->foreign('id_mataKuliah')->references('id_mataKuliah')->on('mata_kuliah');
             $table->timestamps();

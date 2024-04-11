@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Polling extends Model
 {
@@ -15,11 +16,15 @@ class Polling extends Model
 
     protected $fillable = [
         'id_polling',
-        'tanggal_dibuka',
-        'tanggal_ditutup',
+        'start_at',
+        'end_at',
+        'is_active',
     ];
 
-    public function pollingDetail(){
-        return $this->hasMany(User::class, "id_polling");
+    public function pollingDetail(): HasMany
+    {
+        return $this->hasMany(PollingDetail::class, 'id_polling');
     }
+
+
 }

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MataKuliah extends Model
 {
@@ -16,22 +18,26 @@ class MataKuliah extends Model
     protected $fillable = [
       'id_mataKuliah',
       'nama_mataKuliah',
-      'id_programStudi',
+      'id_program_studi',
       'sks',
-      'hari',
-      'jam',
+      'id_semester',
       'id_kurikulum',
     ];
 
-    public function pollingDetail(){
-        return $this->hasMany(User::class, "id_mataKuliah");
+    public function pollingDetail(): HasMany{
+        return $this->hasMany(User::class);
     }
 
-    public function programStudi(){
-        return $this->belongsTo(ProgramStudi::class, "id_programStudi");
+    public function programStudi(): BelongsTo{
+        return $this->belongsTo(ProgramStudi::class, 'id_program_studi');
     }
 
-    public function kurikulum(){
-        return $this->belongsTo(Kurikulum::class, "id_kurikulum");
+    public function kurikulum(): BelongsTo{
+        return $this->belongsTo(Kurikulum::class, 'id_kurikulum');
+    }
+
+    public function semester(): BelongsTo
+    {
+        return $this->belongsTo(Semester::class, 'id_semester');
     }
 }

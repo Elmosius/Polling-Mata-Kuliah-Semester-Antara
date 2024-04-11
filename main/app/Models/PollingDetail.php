@@ -4,32 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PollingDetail extends Model
 {
     use HasFactory;
 
     protected $table = 'polling_detail';
-    protected $primaryKey = 'id_pollingDetail';
     public $incrementing = false;
 
     protected $fillable = [
-      'id_pollingDetail',
-      'jumlah',
-      'id_user',
-      'id_polling',
-      'id_mataKuliah',
+        'id_polling',
+        'id_user',
+        'id_mataKuliah',
     ];
 
-    public function users(){
+    public function users(): BelongsTo
+    {
         return $this->belongsTo(User::class, "id_user");
     }
 
-    public function polling(){
+    public function polling(): BelongsTo
+    {
         return $this->belongsTo(Polling::class, "id_polling");
     }
 
-    public function mataKuliah(){
+    public function mataKuliah(): BelongsTo
+    {
         return $this->belongsTo(MataKuliah::class, "id_mataKuliah");
     }
 }
