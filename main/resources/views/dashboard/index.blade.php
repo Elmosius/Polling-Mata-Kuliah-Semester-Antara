@@ -7,7 +7,7 @@
             <div class="container d-flex justify-content-between align-items-center">
                 <div>
                     <h1>Dashboard</h1>
-                    <p class="ps-1">Hi! {{auth()->user()->nama_user}}, nice to see you again</p>
+                    <h5 class="ps-1">Hi! {{auth()->user()->nama_user}}, nice to see you again</h5>
                 </div>
                 <img class="dashboard-img p-3" src="{{asset('/img/awan.png')}}" alt="cloud">
             </div>
@@ -21,7 +21,7 @@
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
             <div class="border-bottom ps-3 pt-3">
-                <p class="fw-semibold">Polling</p>
+                <p class="fw-semibold">Polling Terbaru</p>
             </div>
             <div class="table-responsive small px-3">
                 <table class="table table-striped table-sm mt-1">

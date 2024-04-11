@@ -31,7 +31,7 @@
             {{auth()->user()->nama_user}}
         </button>
         <ul class="dropdown-menu dropdown-menu-end nav-background py-2 ">
-{{--            <li><a class="dropdown-item" href="#">Profile</a></li>--}}
+            <li><a class="dropdown-item" href="#">Profile</a></li>
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
