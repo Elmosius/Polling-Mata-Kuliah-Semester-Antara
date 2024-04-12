@@ -32,7 +32,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Id User</th>
-                        <th scope="col">Nama</th>
+                        <th scope="col">Nama Lengkap</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
                         <th scope="col">Program Studi</th>

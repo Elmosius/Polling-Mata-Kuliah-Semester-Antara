@@ -78,7 +78,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Apakah anda akan menghapus mata kuliah ini?
+                            <p class="p-0 pb-1 m-0"> Apakah anda akan menghapus user ini?</p>
+                            <p class="fst-italic modal-keterangan">Data yang dihapus tidak bisa dikembalikan </p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

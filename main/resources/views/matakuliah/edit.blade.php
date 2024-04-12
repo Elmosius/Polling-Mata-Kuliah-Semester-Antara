@@ -18,7 +18,7 @@
                                id="id_mataKuliah"
                                name="id_mataKuliah"
                                value="{{old('id_mataKuliah',$mk->id_mataKuliah)}}"
-                                placeholder="Not be greater than 10 Character">
+                               readonly>
                         @error('id_mataKuliah')
                         <div class="invalid-feedback">
                             {{$message}}
