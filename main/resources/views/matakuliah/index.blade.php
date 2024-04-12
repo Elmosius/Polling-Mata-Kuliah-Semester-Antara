@@ -67,6 +67,9 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div>
+                    {{ $data->links()}}
+                </div>
             </div>
             <!-- Modal -->
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"

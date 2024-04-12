@@ -3,8 +3,10 @@
 @section('content')
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 dashboard rounded-1">
-            <h3 class="h3">Polling Mata Kuliah Semester Antara</h3>
+            class="my-3 pt-3 ps-3 pb-2 dashboard rounded-1">
+            <div>
+                <h1>Polling Mata Kuliah Semester Antara</h1>
+            </div>
         </div>
         @if(session()->has('success'))
             <div class="alert alert-success" role="alert" id="myAlert">
@@ -18,49 +20,58 @@
                 </div>
             </div>
         @endif
-        @can('kaprodi')
-            <a href="/dashboard/make-polling" class="text-decoration-none badge bg-success">Lihat Rencana Polling
-            </a>
-            <a href="/dashboard/polling-hasil" class="text-decoration-none badge bg-success mb-4">Lihat Hasil
-                Polling
-            </a>
-        @endcan
         @if($datas)
-            <input type="hidden" name="id_polling" value="{{$datas->id_polling}}">
-            <div class="my-2">Periode
-                buka: {{ \Carbon\Carbon::parse($datas->start_at)->format('d F Y') }}
-                - {{ \Carbon\Carbon::parse($datas->end_at)->format('d F Y') }}
-            </div>
-            <form method="post" action="/dashboard/polling-detail">
-                @csrf
-                <div class="col-lg-5">
-                    <div class="mb-3">
-                        <label for="Kode MataKuliah" class="form-label">Kode - Nama Mata Kuliah</label>
-                        @foreach($mks as $mk)
-                            <div class="form-check" required>
-                                <input type="hidden" name="id_polling" value="{{$datas->id_polling}}">
-                                <input class="form-check-input mata-kuliah" type="checkbox"
-                                       value="{{$mk->id_mataKuliah}}"
-                                       data-sks="{{$mk->sks}}" id="id_mataKuliah" name="id_mataKuliah[]">
-                                <label class="form-check-label" for="Kode - Nama Matakuliah">
-                                    {{$mk->id_mataKuliah}} - {{$mk->nama_mataKuliah}}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
+            <div class="card bg-light-subtle shadow border-0 rounded-3">
+                <input type="hidden" name="id_polling" value="{{$datas->id_polling}}">
+                <div class="my-2 border-bottom ps-3 py-2">
+                    <h6 class="fw-semibold">
+                        Periode buka: {{ \Carbon\Carbon::parse($datas->start_at)->format('d F Y') }}
+                        - {{ \Carbon\Carbon::parse($datas->end_at)->format('d F Y') }}
+                    </h6>
                 </div>
-                <p class="fw-bold" id="total-sks">
-                    Total SKS: 0
-                </p>
-                <p id="error" class="text-danger"></p>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        @else
-            <div class="alert alert-info" role="alert">
-                Tidak ada polling yang dibuka.
+                <form method="post" action="/dashboard/polling-detail" class="py-2 px-4">
+                    @csrf
+                    <div class=" card col-lg-6">
+                        <table class="table table-striped table-sm mb-3">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th scope="col">Kode</th>
+                                <th scope="col">Mata Kuliah</th>
+                                <th scope="col">SKS</th>
+                                <th scope="col">Tahun</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($mks as $mk)
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="id_polling" value="{{$datas->id_polling}}">
+                                        <input class="form-check-input mata-kuliah" type="checkbox"
+                                               value="{{$mk->id_mataKuliah}}"
+                                               data-sks="{{$mk->sks}}" id="id_mataKuliah" name="id_mataKuliah[]">
+                                    </td>
+                                    <td>{{$mk->id_mataKuliah}}</td>
+                                    <td>{{$mk->nama_mataKuliah}}</td>
+                                    <td>{{$mk->sks}}</td>
+                                    <td>{{$mk->kurikulum->tahun}}</td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="fw-bold ps-4" id="total-sks">
+                            Total SKS: 0
+                        </p>
+                    </div>
+                    <p id="error" class="text-danger" style="display: none"></p>
+                    <button type="submit" class=" my-3 btn btn-success">Submit Polling</button>
+                </form>
+                @else
+                    <div class="alert alert-info" role="alert">
+                        Tidak ada polling yang dibuka.
+                    </div>
+                @endif
             </div>
-        @endif
-        <canvas class="my-4 w-100" id="myChart" width="900" height="500"></canvas>
     </main>
 @endsection
 
