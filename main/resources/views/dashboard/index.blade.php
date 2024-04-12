@@ -21,20 +21,20 @@
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
             <div class="border-bottom ps-3 pt-3">
-                <p class="fw-semibold">Polling Terbaru</p>
+                <p class="fw-semibold">Um mau apa yak?</p>
             </div>
             <div class="table-responsive small px-3">
                 <table class="table table-striped table-sm mt-1">
                     <thead>
                     <tr>
-                        <th scope="col">Nomor Polling</th>
-                        <th scope="col">Periode</th>
-                        <th scope="col">Nama Pengguna</th>
-                        <th scope="col">Jumlah SKS</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                   
+
                     </tbody>
                 </table>
             </div>
