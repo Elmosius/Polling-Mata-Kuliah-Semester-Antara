@@ -3,7 +3,7 @@
 @section('content')
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-2 pb-2 dashboard rounded">
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-3 pb-2 dashboard rounded">
             <div>
                 <h1>User</h1>
             </div>
