@@ -41,27 +41,27 @@
                     <div class="col-5">
                         <label for="Semester" class="form-label">Semester</label>
                         <select class="form-select" name="id_semester" required>
-                            @foreach($semester as $mk)
-                                @if(old('id_semester', $mk->id_semester) == $mk->id_semester)
-                                    <option value="{{$mk->id_semester}}"
-                                            selected>{{$mk->semester}}</option>
+                            @foreach($semester as $sm)
+                                @if(old('id_semester', $sm->id_semester) == $sm->id_semester)
+                                    <option value="{{$sm->id_semester}}"
+                                            selected>{{$sm->semester}}</option>
                                 @else
-                                    <option value="{{$mk->id_semester}}">{{$mk->semester}}</option>
+                                    <option value="{{$sm->id_semester}}">{{$sm->semester}}</option>
                                 @endif
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="Nama Mata Kuliah" class="form-label">Nama Mata Kuliah</label>
+                    <label for="nama_mataKuliah" class="form-label">Nama Mata Kuliah</label>
                     <input type="text" class="form-control @error('nama_mataKuliah') is-invalid @enderror"
                            id="nama_mataKuliah"
                            name="nama_mataKuliah"
                            required autofocus
-                           value="{{ old('nama_mataKuliah', $mk->nama_mataKuliah) }}"
+                           value="{{ old("nama_mataKuliah",$mk->nama_mataKuliah) }}"
                            placeholder="Pemrograman Web Lanjut">
                     @error('nama_mataKuliah')
-                    <div class=" invalid-feedback">
+                    <div class="invalid-feedback">
                         {{$message}}
                     </div>
                     @enderror

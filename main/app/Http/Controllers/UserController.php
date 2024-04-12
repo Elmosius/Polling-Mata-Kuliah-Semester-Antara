@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index',[
+        return view('user.index', [
             'data' => User::all()
         ]);
     }
@@ -27,7 +27,7 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('admin');
-        return view('user.create',[
+        return view('user.create', [
             'data' => User::all(),
             'roles' => Role::all(),
             'kode_ps' => ProgramStudi::all()
@@ -51,7 +51,7 @@ class UserController extends Controller
 
         $validateData['password'] = Hash::make($validateData['password']);
         User::create($validateData);
-        return redirect('/dashboard/users')-> with('success','New Account Has Been Created',);
+        return redirect('/dashboard/users')->with('success', 'New Account Has Been Created',);
 
     }
 
@@ -69,7 +69,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('admin');
-        return view('user.edit',[
+        return view('user.edit', [
             'datas' => $user,
             'roles' => Role::all(),
             'kode_ps' => ProgramStudi::all()
@@ -81,8 +81,30 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('admin');
+
+        $validateData = $request->validate([
+            'nama_user' => 'required|max:45',
+            'password' => 'required|min:8|max:25',
+            'new_password' => 'required|min:8|max:25|confirmed',
+            'id_role' => 'required',
+            'id_program_studi' => 'required'
+        ]);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Password lama tidak sesuai']);
+        }
+
+        if (Hash::check($request->new_password, $user->password)) {
+            return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        $user->update($validateData);
+        return redirect('/dashboard/users')->with('success', 'Password telah diperbarui');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -91,6 +113,6 @@ class UserController extends Controller
     {
         $this->authorize('admin');
         User::destroy($user->id_user);
-        return redirect('/dashboard/users')-> with('success','Account Has Been Deleted',);
+        return redirect('/dashboard/users')->with('success', 'Account Has Been Deleted',);
     }
 }

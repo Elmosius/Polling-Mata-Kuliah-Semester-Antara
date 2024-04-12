@@ -34,17 +34,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($datas as $pol)
-                        <tr>
-                            <td>{{$pol->polling->id_polling}}</td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($pol->polling->start_at)->format('Y-m-d') }}
-                                - {{ \Carbon\Carbon::parse($pol->polling->end_at)->format('Y-m-d') }}
-                            </td>
-                            <td>{{$pol->users->nama_user}}</td>
-                            {{--                        <td>{{$pol->where('id_mataKuliah', $pol->mataKuliah->id_mataKuliah)->sum('sks')}}</td>--}}
-                        </tr>
-                    @endforeach
+                   
                     </tbody>
                 </table>
             </div>

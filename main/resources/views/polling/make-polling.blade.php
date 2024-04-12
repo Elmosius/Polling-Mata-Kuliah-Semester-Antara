@@ -31,7 +31,8 @@
                     <th scope="col">Nomor Polling</th>
                     <th scope="col">Periode</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
                 @foreach($datas as $pol)
                     <tr>
@@ -45,13 +46,14 @@
                             <a href="/dashboard/polling/{{$pol->id_polling}}/edit" class="badge bg-warning">
                                 <span class="bi bi-pencil-square"></span>
                             </a>
-                            <form method="post" action="/dashboard/polling/{{$pol->id_polling}}" class="d-inline">
-                                @method('delete')
-                                @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')">
-                                    <span class="bi bi-x"></span>
-                                </button>
-                            </form>
+                        </td>
+                        <td>
+                            <button class="badge bg-danger border-0"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    data-id="{{$pol->id_polling}}">
+                                <span class="bi bi-x"></span>
+                            </button>
                         </td>
                     </tr>
                 </thead>
@@ -60,6 +62,45 @@
 
             </table>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Polling</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="p-0 pb-1 m-0"> Apakah anda akan menghapus polling ini?</p>
+                        <p class="fst-italic modal-keterangan">Data yang dihapus tidak bisa dikembalikan </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form method="post" action="" class="d-inline" id="deleteForm">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
         <canvas class="my-4 w-100" id="myChart" width="900" height="500"></canvas>
     </main>
 @endsection
+
+@section('js-tambahan')
+    <script>
+        $(document).ready(function(){
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var formAction = "/dashboard/polling/" + id;
+                $('#deleteForm').attr('action', formAction);
+            });
+        });
+    </script>
+@endsection
+

@@ -56,15 +56,12 @@
                                 </a>
                             </td>
                             <td>
-                                <form method="post" action="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}"
-                                      class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button class="btn btn-danger pt-0 pb-1 px-2" onclick="return confirm('Are you sure?')">
-                                        <i class="bi bi-trash3-fill" data-bs-toggle="modal"
-                                           data-bs-target="#exampleModal"></i>
-                                    </button>
-                                </form>
+                                <button class="btn btn-danger pt-0 pb-1 px-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        data-id="{{$mk->id_mataKuliah}}">
+                                    <i class="bi bi-trash3-fill"></i>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -72,26 +69,42 @@
                 </table>
             </div>
             <!-- Modal -->
-            {{--            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"--}}
-            {{--                 aria-hidden="true">--}}
-            {{--                <div class="modal-dialog modal-dialog-centered">--}}
-            {{--                    <div class="modal-content">--}}
-            {{--                        <div class="modal-header">--}}
-            {{--                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Mata Kuliah</h1>--}}
-            {{--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-            {{--                        </div>--}}
-            {{--                        <div class="modal-body">--}}
-            {{--                            Apakah anda akan menghapus mata kuliah ini?--}}
-            {{--                        </div>--}}
-            {{--                        <div class="modal-footer">--}}
-            {{--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>--}}
-            {{--                            <button type="button" class="btn btn-danger">Delete</button>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-            {{--            End Modal --}}
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Mata Kuliah</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah anda akan menghapus mata kuliah ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <form method="post" action="" class="d-inline" id="deleteForm">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal -->
         </div>
     </main>
 @endsection
 
+@section('js-tambahan')
+    <script>
+        $(document).ready(function () {
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var formAction = "/dashboard/mata-kuliah/" + id;
+                $('#deleteForm').attr('action', formAction);
+            });
+        });
+    </script>
+@endsection
