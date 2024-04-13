@@ -6,7 +6,15 @@
 
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 ps-3 pb-2 my-3 dashboard rounded-1">
-            <h3 class="h2">Create Polling Baru </h3>
+            <div>
+                <h2>Create Polling Baru</h2>
+            </div>
+            <div class="pe-4">
+                <a href="{{asset('/dashboard/make-polling')}}" class="btn btn-warning gap-2">
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+                </a>
+            </div>
         </div>
 
         @if($errors->any())

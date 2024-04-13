@@ -4,7 +4,15 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-3 pb-2 dashboard rounded-1">
-            <h1>Edit Mata Kuliah </h1>
+            <div>
+                <h2>Edit Mata Kuliah </h2>
+            </div>
+            <div class="pe-4">
+                <a href="{{asset('/dashboard/mata-kuliah')}}" class="btn btn-warning gap-2">
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+                </a>
+            </div>
         </div>
 
         <div class="card bg-light-subtle shadow border-0 rouded-3">

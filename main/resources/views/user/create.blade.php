@@ -5,7 +5,13 @@
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-3 pb-2 dashboard rounded-1">
             <div>
-                <h1>Create New User</h1>
+                <h2>Create New User</h2>
+            </div>
+            <div class="pe-4">
+                <a href="{{asset('/dashboard/users')}}" class="btn btn-warning gap-2">
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+                </a>
             </div>
         </div>
 

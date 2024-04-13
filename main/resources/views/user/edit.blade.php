@@ -4,7 +4,15 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 ps-3 pb-2 my-3 dashboard rounded-1">
-            <div><h1>Edit User</h1></div>
+            <div>
+                <h2>Edit User</h2>
+            </div>
+            <div class="pe-4">
+                <a href="{{asset('/dashboard/users')}}" class="btn btn-warning gap-2">
+                    <i class="bi bi-arrow-left"></i>
+                    Back
+                </a>
+            </div>
         </div>
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
