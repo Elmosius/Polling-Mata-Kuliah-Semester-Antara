@@ -17,7 +17,7 @@ class MataKuliahController extends Controller
     public function index()
     {
         return view('matakuliah.index',[
-            'data' => MataKuliah::all()
+            'data' => MataKuliah::paginate(5)
         ]);
     }
 
@@ -78,7 +78,6 @@ class MataKuliahController extends Controller
     public function update(Request $request, MataKuliah $mataKuliah)
     {
         $validateData = $request->validate([
-            'id_mataKuliah' => 'required|max:10|unique:mata_kuliah',
             'nama_mataKuliah' => 'required|max:45',
             'sks' => 'required|min:1|max:4',
             'id_semester'=> 'required',
