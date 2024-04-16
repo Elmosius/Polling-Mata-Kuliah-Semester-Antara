@@ -78,27 +78,22 @@
                     <div class="col-6 pe-3">
                         <label for="Kode Program Studi" class="form-label">Kode Program Studi</label>
                         <select class="form-select" name="id_program_studi" required>
-                            @foreach($ps as $mk)
-                                @if(old('id_program_studi', $mk->id_program_studi) == $mk->id_program_studi)
-                                    <option value="{{$mk->id_program_studi}}"
-                                            selected>{{$mk->nama_program_studi}}</option>
-                                @else
-                                    <option
-                                        value="{{$mk->id_program_studi}}">{{$mk->nama_program_studi}}</option>
-                                @endif
+                            @foreach($kps as $ps)
+                                <option
+                                    value="{{$ps->id_program_studi}}" {{ old('id_program_studi', $mk->id_program_studi) == $ps->id_program_studi ? 'selected' : '' }}>
+                                    {{$ps->nama_program_studi}}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-6 ps-3">
                         <label for="Tahun Kurikulum" class="form-label">Tahun</label>
                         <select class="form-select" name="id_kurikulum" required>
-                            @foreach($kurikulum as $mk)
-                                @if(old('id_kurikulum', $mk->id_kurikulum) == $mk->id_kurikulum)
-                                    <option value="{{$mk->id_kurikulum}}"
-                                            selected>{{$mk->tahun}}</option>
-                                @else
-                                    <option value="{{$mk->id_kurikulum}}">{{$mk->tahun}}</option>
-                                @endif
+                            @foreach($kurikulum as $kr)
+                                <option
+                                    value="{{$kr->id_kurikulum}}" {{ old('id_kurikulum', $mk->id_kurikulum) == $kr->id_kurikulum ? 'selected' : '' }}>
+                                    {{$kr->tahun}}
+                                </option>
                             @endforeach
                         </select>
                     </div>

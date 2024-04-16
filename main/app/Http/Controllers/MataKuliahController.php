@@ -67,7 +67,7 @@ class MataKuliahController extends Controller
         return view('matakuliah.edit',[
             'mk' => $mataKuliah,
             'semester' => semester::all(),
-            'ps' => ProgramStudi::all(),
+            'kps' => ProgramStudi::all(),
             'kurikulum' => Kurikulum::all()
         ]);
     }
