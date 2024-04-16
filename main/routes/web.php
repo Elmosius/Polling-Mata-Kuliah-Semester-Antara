@@ -24,31 +24,41 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [\App\Http\Controllers\PollingDetailController::class, 'index'])
         ->name('dashboard.index');
 
-    Route::resource('/dashboard/mata-kuliah', \App\Http\Controllers\MataKuliahController::class)
-        ->middleware('kaprodi');
-
-    Route::resource('/dashboard/users', \App\Http\Controllers\UserController::class)
-        ->middleware('kaprodi');
-
-    Route::resource('/dashboard/polling', \App\Http\Controllers\PollingController::class);
+    Route::resource('/dashboard/polling', \App\Http\Controllers\PollingController::class)
+    ->except(['show']);
 
     Route::resource('/dashboard/polling-detail',
-        \App\Http\Controllers\PollingDetailController::class);
+        \App\Http\Controllers\PollingDetailController::class)->except(['show', 'create', 'destroy']);
+
+//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//
+//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//
+//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+});
+
+Route::middleware('adminorkaprodi')->group(function () {
+    Route::resource('/dashboard/mata-kuliah', \App\Http\Controllers\MataKuliahController::class)
+    ->except('show');
+
+    Route::resource('/dashboard/kurikulum', \App\Http\Controllers\KurikulumController::class)
+    ->except('show');
+
+    Route::resource('/dashboard/users', \App\Http\Controllers\UserController::class)
+        ->except('show');
 
     Route::get('/dashboard/polling-hasil', [\App\Http\Controllers\PollingController::class, 'hasil'])
-        ->name('polling.hasil')->middleware('kaprodi');
+        ->name('polling.hasil');
 
     Route::get('/dashboard/make-polling', [\App\Http\Controllers\PollingController::class, 'makePolling'])
-        ->name('polling.make-polling')->middleware('kaprodi');
+        ->name('polling.make-polling');
 
     Route::get('/dashboard/polling-detail-hasil/{polling_detail}/{id_mataKuliah}',
         [\App\Http\Controllers\PollingDetailController::class, 'detailHasil'])
-        ->name('polling.detailHasil')->middleware('kaprodi');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        ->name('polling.detailHasil');
 });
-
 
 require __DIR__ . '/auth.php';

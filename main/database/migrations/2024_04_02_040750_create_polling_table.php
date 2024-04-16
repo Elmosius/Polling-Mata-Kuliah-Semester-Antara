@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('polling', function (Blueprint $table) {
-            $table->string('id_polling',5)->primary();
+            $table->id('id_polling');
+            $table->string('nama_polling',45);
             $table->date('start_at');
             $table->date('end_at');
             $table->string('is_active',2);

@@ -20,8 +20,18 @@
                 </div>
             </div>
         @endif
+
         @if($datas)
-            <div class="card bg-light-subtle shadow border-0 rounded-3">
+            @if($now->greaterThan($datas->start_at) && $now->lessThan($datas->end_at) && $hasVoted)
+                <h6 class="fw-semibold">
+                    Periode buka: {{ \Carbon\Carbon::parse($datas->start_at)->format('d F Y') }}
+                    - {{ \Carbon\Carbon::parse($datas->end_at)->format('d F Y') }}
+                </h6>
+                <a class="btn btn-primary"
+                   href="/dashboard/polling-detail/{{$datas->id_polling}}/edit">Edit Polling</a>
+            @endif
+
+            <div class="card bg-light-subtle shadow border-0 rounded-3 mt-2">
                 <input type="hidden" name="id_polling" value="{{$datas->id_polling}}">
                 <div class="my-2 border-bottom ps-3 py-2">
                     <h6 class="fw-semibold">

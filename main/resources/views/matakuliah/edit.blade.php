@@ -46,19 +46,6 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-5">
-                        <label for="Semester" class="form-label">Semester</label>
-                        <select class="form-select" name="id_semester" required>
-                            @foreach($semester as $sm)
-                                @if(old('id_semester', $sm->id_semester) == $sm->id_semester)
-                                    <option value="{{$sm->id_semester}}"
-                                            selected>{{$sm->semester}}</option>
-                                @else
-                                    <option value="{{$sm->id_semester}}">{{$sm->semester}}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="nama_mataKuliah" class="form-label">Nama Mata Kuliah</label>

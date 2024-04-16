@@ -24,7 +24,7 @@
                         <input type="text" class="form-control @error('id_user') is-invalid @enderror" id="id_user"
                                name="id_user" required autofocus
                                value="{{ old('id_user') }}"
-                               placeholder="Not be greater than 5 Character">
+                               placeholder="Not be greater than 10 Character">
                         @error('id_user')
                         <div class="invalid-feedback">
                             {{$message}}

@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $this->authorize('admin');
         $validateData = $request->validate([
-            'id_user' => 'required|max:5|unique:users',
+            'id_user' => 'required|max:10|unique:users',
             'nama_user' => 'required|max:45',
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:8|max:25',
@@ -82,27 +82,32 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('admin');
-
         $validateData = $request->validate([
             'nama_user' => 'required|max:45',
-            'password' => 'required|min:8|max:25',
-            'new_password' => 'required|min:8|max:25|confirmed',
+            'password' => 'nullable|min:8|max:25',
+            'new_password' => 'nullable|min:8|max:25|confirmed',
             'id_role' => 'required',
             'id_program_studi' => 'required'
         ]);
 
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Password lama tidak sesuai']);
+        if ($request->filled('password') && $request->filled('new_password')) {
+            // jika si passsword diisi
+            if (!Hash::check($request->password, $user->password)) {
+                return back()->withErrors(['password' => 'Password lama tidak sesuai']);
+            }
+
+            if (Hash::check($request->new_password, $user->password)) {
+                return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama']);
+            }
+
+            $validateData['password'] = Hash::make($request->new_password);
+        } else {
+            // Jika password baru tidak diisi
+            $validateData['password'] = $user->password;
         }
 
-        if (Hash::check($request->new_password, $user->password)) {
-            return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama']);
-        }
-
-        $user->password = Hash::make($request->new_password);
-        $user->save();
         $user->update($validateData);
-        return redirect('/dashboard/users')->with('success', 'Password telah diperbarui');
+        return redirect('/dashboard/users')->with('success', 'Pengguna telah diperbarui');
     }
 
 

@@ -20,7 +20,6 @@ class MataKuliah extends Model
       'nama_mataKuliah',
       'id_program_studi',
       'sks',
-      'id_semester',
       'id_kurikulum',
     ];
 
@@ -34,10 +33,5 @@ class MataKuliah extends Model
 
     public function kurikulum(): BelongsTo{
         return $this->belongsTo(Kurikulum::class, 'id_kurikulum');
-    }
-
-    public function semester(): BelongsTo
-    {
-        return $this->belongsTo(Semester::class, 'id_semester');
     }
 }

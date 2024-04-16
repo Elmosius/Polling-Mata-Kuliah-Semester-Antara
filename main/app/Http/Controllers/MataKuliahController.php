@@ -16,6 +16,7 @@ class MataKuliahController extends Controller
      */
     public function index()
     {
+
         return view('matakuliah.index',[
             'data' => MataKuliah::paginate(5)
         ]);
@@ -26,8 +27,8 @@ class MataKuliahController extends Controller
      */
     public function create()
     {
+        $this->authorize('kaprodi');
         return view('matakuliah.create',[
-            'semester' => semester::all(),
             'ps' => ProgramStudi::all(),
             'kurikulum' => Kurikulum::all()
         ]);
@@ -38,11 +39,11 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('kaprodi');
         $validateData = $request->validate([
             'id_mataKuliah' => 'required|max:10|unique:mata_kuliah',
             'nama_mataKuliah' => 'required|max:45',
             'sks' => 'required|min:1|max:4',
-            'id_semester'=> 'required',
             'id_program_studi' => 'required',
             'id_kurikulum' => 'required'
         ]);
@@ -64,9 +65,9 @@ class MataKuliahController extends Controller
      */
     public function edit(MataKuliah $mataKuliah)
     {
+        $this->authorize('kaprodi');
         return view('matakuliah.edit',[
             'mk' => $mataKuliah,
-            'semester' => semester::all(),
             'kps' => ProgramStudi::all(),
             'kurikulum' => Kurikulum::all()
         ]);
@@ -77,10 +78,10 @@ class MataKuliahController extends Controller
      */
     public function update(Request $request, MataKuliah $mataKuliah)
     {
+        $this->authorize('kaprodi');
         $validateData = $request->validate([
             'nama_mataKuliah' => 'required|max:45',
             'sks' => 'required|min:1|max:4',
-            'id_semester'=> 'required',
             'id_program_studi' => 'required',
             'id_kurikulum' => 'required'
         ]);
@@ -94,6 +95,7 @@ class MataKuliahController extends Controller
      */
     public function destroy(MataKuliah $mataKuliah)
     {
+        $this->authorize('kaprodi');
         MataKuliah::destroy($mataKuliah->id_mataKuliah);
         return redirect('/dashboard/mata-kuliah')-> with('success','Mata kuliah Has Been Deleted',);
     }

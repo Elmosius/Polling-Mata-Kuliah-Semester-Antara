@@ -10,6 +10,7 @@ class PollingDetail extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_polling';
     protected $table = 'polling_detail';
     public $incrementing = false;
 

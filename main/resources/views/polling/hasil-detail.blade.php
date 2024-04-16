@@ -5,7 +5,7 @@
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 ps-3 pb-2 my-3 dashboard rounded-3">
             <div>
-                <h1>Hasil Polling {{$datas->first()->polling->id_polling}} -
+                <h1>Hasil Polling {{$datas->first()->polling->nama_polling}} -
                     {{$datas->first()->mataKuliah->nama_mataKuliah}}</h1>
             </div>
             <div class="pe-4">
@@ -36,7 +36,7 @@
                 @foreach($datas as $data)
                     <tr>
                         <td>
-                            {{$data->created_at}}
+                            {{ \Carbon\Carbon::parse($data->created_at)->format('d M Y H:i:s') }}
                         </td>
                         <td>
                             {{$data->users->nama_user}}

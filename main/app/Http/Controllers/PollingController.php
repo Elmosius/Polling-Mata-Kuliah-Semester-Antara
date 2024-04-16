@@ -50,9 +50,10 @@ class PollingController extends Controller
         return view('polling.index', [
             'datas' => $activePollings,
             'mks' => $mks,
+            'now'=> $now,
+            'hasVoted' => $hasVoted
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -77,7 +78,7 @@ class PollingController extends Controller
         }
 
         $validateData = $request->validate([
-            'id_polling' => 'required|max:5|unique:polling',
+            'nama_polling' => 'required|max:45',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'is_active' => 'required|max:2'
@@ -119,6 +120,7 @@ class PollingController extends Controller
         }
 
         $validateData = $request->validate([
+            'nama_polling' => 'required|max:45',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'is_active' => 'required|max:2'
@@ -141,7 +143,6 @@ class PollingController extends Controller
 
     public function hasil()
     {
-        $this->authorize('kaprodi');
         return view('polling.hasil', [
             'datas' => Polling::with('pollingDetail')->get(),
         ]);
@@ -149,7 +150,6 @@ class PollingController extends Controller
 
     public function makePolling()
     {
-        $this->authorize('kaprodi');
         return view('polling.make-polling', [
             'datas' => Polling::with('pollingDetail')->get(),
         ]);

@@ -5,13 +5,13 @@
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-3 pb-2 dashboard rounded-1">
             <div>
-                <h1>Mata Kuliah</h1>
+                <h1>Kurikulum</h1>
             </div>
             @can('kaprodi')
                 <div class="pe-3">
-                    <a href="/dashboard/mata-kuliah/create" class="btn btn-success d-flex">
+                    <a href="/dashboard/kurikulum/create" class="btn btn-success d-flex">
                         <i class="bi bi-folder-plus"></i>
-                        <span class="ps-2">Add Mata Kuliah</span>
+                        <span class="ps-2">Add Kurikulum Baru</span>
                     </a>
                 </div>
             @endcan
@@ -25,32 +25,25 @@
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
             <div class="border-bottom ps-3 pt-3">
-                <p class="fw-semibold">Semua Mata Kuliah</p>
+                <p class="fw-semibold">Semua Kurikulum</p>
             </div>
             <div class="table-responsive small px-3">
                 <table class="table table-striped table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Kode Mata Kuliah</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">SKS</th>
-                        <th scope="col">Kode - Nama Program Studi</th>
+                        <th scope="col">Id Kurikulum</th>
                         <th scope="col">Tahun</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
-
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($data as $mk)
+                    @foreach($data as $kr)
                         <tr>
-                            <td>{{$mk->id_mataKuliah}}</td>
-                            <td>{{$mk->nama_mataKuliah}}</td>
-                            <td>{{$mk->sks}}</td>
-                            <td>{{$mk->id_program_studi}} - {{$mk->programStudi->nama_program_studi}}</td>
-                            <td>{{$mk->kurikulum->tahun}}</td>
+                            <td>{{$kr->id_kurikulum}}</td>
+                            <td>{{$kr->tahun}}</td>
                             <td>
-                                <a href="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}/edit"
+                                <a href="/dashboard/kurikulum/{{$kr->id_kurikulum}}/edit"
                                    class="btn btn-warning pt-0 pb-1 px-2">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
@@ -59,7 +52,7 @@
                                 <button class="btn btn-danger pt-0 pb-1 px-2"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
-                                        data-id="{{$mk->id_mataKuliah}}">
+                                        data-id="{{$kr->id_kurikulum}}">
                                     <i class="bi bi-trash3-fill"></i>
                                 </button>
                             </td>
@@ -77,11 +70,11 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Mata Kuliah</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Kurikulum</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p class="p-0 pb-1 m-0"> Apakah anda akan menghapus user ini?</p>
+                            <p class="p-0 pb-1 m-0"> Apakah anda akan menghapus kurikulum ini?</p>
                             <p class="fst-italic modal-keterangan">Data yang dihapus tidak bisa dikembalikan </p>
                         </div>
                         <div class="modal-footer">
@@ -106,7 +99,7 @@
             $('#deleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var id = button.data('id');
-                var formAction = "/dashboard/mata-kuliah/" + id;
+                var formAction = "/dashboard/kurikulum/" + id;
                 $('#deleteForm').attr('action', formAction);
             });
         });

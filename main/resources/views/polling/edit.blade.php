@@ -6,7 +6,7 @@
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 ps-3 pb-2 my-3 dashboard rounded-3">
             <div>
-                <h2>Edit Polling </h2>
+                <h2>Edit Rencana Polling </h2>
             </div>
             <div class="pe-4">
                 <a href="{{asset('/dashboard/make-polling')}}" class="btn btn-warning gap-2">
@@ -30,13 +30,13 @@
             <form method="post" action="/dashboard/polling/{{$datas->id_polling}}" class="p-4">
                 @method('put')
                 @csrf
-
                 <div class="mb-3">
-                    <label for="id_polling" class="form-label fw-semibold">ID Polling:</label>
-                    <input type="text" class="form-control @error('id_polling') is-invalid @enderror"
-                           id="id_polling" name="id_polling" value="{{old('id_polling', $datas->id_polling)}}"
-                           readonly>
-                    @error('id_polling')
+                    <label for="nama_polling" class="form-label fw-semibold">Nama Polling:</label>
+                    <input type="text" class="form-control @error('nama_polling') is-invalid @enderror"
+                           id="nama_polling" name="nama_polling"
+                           value="{{old('nama_polling', $datas->nama_polling)}}"
+                           placeholder="Not be greater than 45 Character">
+                    @error('nama_polling')
                     <div class="invalid-feedback">
                         {{$message}}
                     </div>
