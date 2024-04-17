@@ -8,6 +8,8 @@ use App\Models\Polling;
 use App\Models\PollingDetail;
 use App\Models\semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Carbon;
 
 class PollingDetailController extends Controller
 {
@@ -16,10 +18,61 @@ class PollingDetailController extends Controller
      */
     public function index()
     {
+
+        $jumVoted = "SELECT id_user
+                     FROM polling_detail
+                     GROUP BY id_user";
+
+        $jumPolling = "SELECT id_polling
+                       FROM polling";
+
+        $mytime = date('Y-m-d');
+
+        $tanggal = "SELECT end_at
+                    FROM polling
+                    WHERE end_at < $mytime";
+
+        $jumHasilVoted = DB::select($jumVoted);
+        $jumHasilPolling = DB::select($jumPolling);
+
         return view('dashboard.index', [
-            'datas' => PollingDetail::with(['users', 'polling', 'mataKuliah'])->get(),
+            'datas' => Polling::where('is_active', 1)->get(),
+            'jumlah' => Polling::where('is_active', 1)->count(),
+            'hasilVoted' => $jumHasilVoted,
+            'hasilPolling' => $jumHasilPolling,
+            'periodEnd' => $tanggal
         ]);
     }
+
+    public function getChart()
+    {
+        $arrayJumlahMk = [];
+        $arrayLabelMk = [];
+        $index = 0;
+
+        $dataPollingDetail = PollingDetail::select("id_mataKuliah")->groupBy("id_mataKuliah")->pluck("id_mataKuliah")->toArray();
+
+        $sqlJumlahMk = "SELECT mk.nama_mataKuliah, count(pd.id_mataKuliah) jumlah_mataKuliah
+                        FROM polling p, polling_detail pd, mata_kuliah mk
+                        WHERE pd.id_polling = p.id_polling
+                            AND pd.id_mataKuliah = mk.id_mataKuliah
+                        GROUP BY pd.id_mataKuliah, mk.nama_mataKuliah";
+
+        $datajumlahMk = DB::select($sqlJumlahMk);
+
+        foreach ($dataPollingDetail as $pd) {
+            $arrayJumlahMk[$index] = $datajumlahMk[$index]->jumlah_mataKuliah;
+            $arrayLabelMk[$index] = $datajumlahMk[$index]->nama_mataKuliah;
+            $index += 1;
+        }
+
+        $dataa = [
+            'nama' => $arrayLabelMk,
+            'jumlah' => $arrayJumlahMk
+        ];
+        return $dataa;
+    }
+
 
     /**
      * Show the form for creating a new resource.

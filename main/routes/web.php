@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PollingDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [\App\Http\Controllers\PollingDetailController::class, 'index'])
         ->name('dashboard.index');
+
+    Route::get('/get-chart', [PollingDetailController::class, 'getChart'])
+        ->name('get-chart');
 
     Route::resource('/dashboard/polling', \App\Http\Controllers\PollingController::class)
     ->except(['show']);
