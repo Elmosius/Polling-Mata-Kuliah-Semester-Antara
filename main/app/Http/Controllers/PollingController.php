@@ -25,7 +25,7 @@ class PollingController extends Controller
             ->where('end_at', '>=', $now)
             ->first();
 
-        $admin = $user->role->nama_role != 'admin' && $user->role->nama_role != 'kaprodi';
+        $mahasiswa = $user->role->nama_role != 'admin' && $user->role->nama_role != 'kaprodi';
         if ($activePollings) {
             $hasVoted = PollingDetail::where('id_user', $user->id_user)
                 ->where('id_polling', $activePollings->id_polling)
@@ -34,14 +34,14 @@ class PollingController extends Controller
             $hasVoted = false;
         }
 
-        if ($hasVoted && $admin) {
-            return view('polling.index', [
-                'datas' => null,
-                'mks' => null,
-            ])->with('success', 'Terima kasih sudah melakukan polling');
-        }
+//        if ($hasVoted) {
+//            return view('polling.index', [
+//                'datas' => null,
+//                'mks' => null,
+//            ])->with('success', 'Terima kasih sudah melakukan polling');
+//        }
 
-        if ($admin) {
+        if ($mahasiswa) {
             $mks = MataKuliah::where('id_program_studi', $user->id_program_studi)->get();
         } else {
             $mks = MataKuliah::all();

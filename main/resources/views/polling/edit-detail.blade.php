@@ -9,7 +9,7 @@
                 <h2>Edit Polling </h2>
             </div>
             <div class="pe-4">
-                <a href="{{asset('/dashboard/make-polling')}}" class="btn btn-warning gap-2">
+                <a href="{{asset('/dashboard/polling')}}" class="btn btn-warning gap-2">
                     <i class="bi bi-arrow-left"></i>
                     Back
                 </a>
@@ -17,7 +17,7 @@
         </div>
 
         @if($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" id="myAlert">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -27,7 +27,7 @@
         @endif
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
-            <form method="post" action="/dashboard/polling-detail/{{$hasil->id_polling}}" class="p-4">
+            <form method="post" action="/dashboard/polling-detail/{{$datas->id_polling}}" class="p-4">
                 @method('put')
                 @csrf
                 <div class=" card col-lg-6">
@@ -54,15 +54,15 @@
                                 <td>{{$mk->nama_mataKuliah}}</td>
                                 <td>{{$mk->sks}}</td>
                                 <td>{{$mk->kurikulum->tahun}}</td>
-                                @endforeach
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <p class="fw-bold ps-4" id="total-sks">
                         Total SKS: 0
                     </p>
                 </div>
-                <button type="submit" class="btn btn-success">Edit</button>
+                <button type="submit" class="btn btn-success mt-2">Edit</button>
             </form>
         </div>
     </main>

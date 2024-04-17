@@ -33,8 +33,10 @@
                     <tr>
                         <th scope="col">Id Kurikulum</th>
                         <th scope="col">Tahun</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
+                        @can('kaprodi')
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        @endcan
                     </tr>
                     </thead>
                     <tbody>
@@ -42,20 +44,22 @@
                         <tr>
                             <td>{{$kr->id_kurikulum}}</td>
                             <td>{{$kr->tahun}}</td>
-                            <td>
-                                <a href="/dashboard/kurikulum/{{$kr->id_kurikulum}}/edit"
-                                   class="btn btn-warning pt-0 pb-1 px-2">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger pt-0 pb-1 px-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="{{$kr->id_kurikulum}}">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
-                            </td>
+                            @can('kaprodi')
+                                <td>
+                                    <a href="/dashboard/kurikulum/{{$kr->id_kurikulum}}/edit"
+                                       class="btn btn-warning pt-0 pb-1 px-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger pt-0 pb-1 px-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="{{$kr->id_kurikulum}}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                     </tbody>

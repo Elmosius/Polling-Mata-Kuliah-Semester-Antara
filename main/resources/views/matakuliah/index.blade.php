@@ -36,8 +36,10 @@
                         <th scope="col">SKS</th>
                         <th scope="col">Kode - Nama Program Studi</th>
                         <th scope="col">Tahun</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
+                        @can('kaprodi')
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        @endcan
 
                     </tr>
                     </thead>
@@ -49,20 +51,22 @@
                             <td>{{$mk->sks}}</td>
                             <td>{{$mk->id_program_studi}} - {{$mk->programStudi->nama_program_studi}}</td>
                             <td>{{$mk->kurikulum->tahun}}</td>
-                            <td>
-                                <a href="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}/edit"
-                                   class="btn btn-warning pt-0 pb-1 px-2">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger pt-0 pb-1 px-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="{{$mk->id_mataKuliah}}">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
-                            </td>
+                            @can('kaprodi')
+                                <td>
+                                    <a href="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}/edit"
+                                       class="btn btn-warning pt-0 pb-1 px-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger pt-0 pb-1 px-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="{{$mk->id_mataKuliah}}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                     </tbody>

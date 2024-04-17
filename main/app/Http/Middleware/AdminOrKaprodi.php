@@ -15,7 +15,7 @@ class AdminOrKaprodi
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->id_role === '3' ){
+        if(auth()->check() && auth()->user()->id_role !== '1' && auth()->user()->id_role !== '2'){
             abort(403);
         }
         return $next($request);

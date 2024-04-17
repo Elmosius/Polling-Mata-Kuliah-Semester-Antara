@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_polling');
             $table->foreign('id_polling')->references('id_polling')->on('polling')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->string('id_user',5);
+            $table->string('id_user',10);
             $table->foreign('id_user')->references('id_user')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->string('id_mataKuliah',10);

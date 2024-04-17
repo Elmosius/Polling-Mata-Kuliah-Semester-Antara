@@ -86,8 +86,42 @@ class PollingDetailController extends Controller
      */
     public function edit(PollingDetail $pollingDetail)
     {
-        //
+        $user = auth()->user();
+        $now = now();
+        $mahasiswa = $user->role->nama_role != 'admin' && $user->role->nama_role != 'kaprodi';
+
+        $activePollings = Polling::where('is_active', 1)
+            ->where('start_at', '<=', $now)
+            ->where('end_at', '>=', $now)
+            ->first();
+
+        if ($activePollings) {
+            $hasVoted = $pollingDetail->where('id_user', $user->id_user)
+                ->where('id_polling', $activePollings->id_polling)
+                ->exists();
+        } else {
+            $hasVoted = false;
+        }
+
+        if ($mahasiswa) {
+            $mks = MataKuliah::where('id_program_studi', $user->id_program_studi)->get();
+        } else {
+            $mks = MataKuliah::all();
+        }
+
+        if (!$hasVoted) {
+            return redirect('dashboard/polling')->with('errors', 'Anda tidak dapat mengedit
+            polling ini karena periode
+            polling telah berakhir atau polling tidak aktif.');
+        }
+
+        return view('polling.edit-detail', [
+            'datas' => $activePollings,
+            'mks' => $mks,
+            'hasVoted' => $hasVoted
+        ]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -110,15 +144,21 @@ class PollingDetailController extends Controller
         }
 
         $validateData['id_user'] = auth()->user()->id_user;
+
+        PollingDetail::where('id_user', $validateData['id_user'])
+            ->where('id_polling', $validateData['id_polling'])
+            ->delete();
+
         foreach ($validateData['id_mataKuliah'] as $id_mataKuliah) {
-            $pollingDetail->update([
+            PollingDetail::create([
                 'id_polling' => $validateData['id_polling'],
                 'id_user' => $validateData['id_user'],
                 'id_mataKuliah' => $id_mataKuliah,
             ]);
         }
-        return redirect('/dashboard/polling')->with('success', 'Polling Berhasil!',);
+        return redirect('/dashboard/polling')->with('success', 'Update polling berhasil!',);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -127,7 +167,6 @@ class PollingDetailController extends Controller
     {
         //
     }
-
 
 
 }
