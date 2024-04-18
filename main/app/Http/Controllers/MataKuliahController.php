@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kurikulum;
 use App\Models\MataKuliah;
+use App\Models\PollingDetail;
 use App\Models\ProgramStudi;
 use App\Models\semester;
 use App\Models\User;
@@ -17,7 +18,7 @@ class MataKuliahController extends Controller
     public function index()
     {
 
-        return view('matakuliah.index',[
+        return view('matakuliah.index', [
             'data' => MataKuliah::paginate(5)
         ]);
     }
@@ -28,7 +29,7 @@ class MataKuliahController extends Controller
     public function create()
     {
         $this->authorize('kaprodi');
-        return view('matakuliah.create',[
+        return view('matakuliah.create', [
             'ps' => ProgramStudi::all(),
             'kurikulum' => Kurikulum::all()
         ]);
@@ -49,7 +50,7 @@ class MataKuliahController extends Controller
         ]);
 
         MataKuliah::create($validateData);
-        return redirect('/dashboard/mata-kuliah')-> with('success','Mata kuliah Has Been Created',);
+        return redirect('/dashboard/mata-kuliah')->with('success', 'Mata kuliah Has Been Created',);
     }
 
     /**
@@ -66,7 +67,7 @@ class MataKuliahController extends Controller
     public function edit(MataKuliah $mataKuliah)
     {
         $this->authorize('kaprodi');
-        return view('matakuliah.edit',[
+        return view('matakuliah.edit', [
             'mk' => $mataKuliah,
             'kps' => ProgramStudi::all(),
             'kurikulum' => Kurikulum::all()
@@ -96,7 +97,14 @@ class MataKuliahController extends Controller
     public function destroy(MataKuliah $mataKuliah)
     {
         $this->authorize('kaprodi');
+
+        $check = PollingDetail::where('id_mataKuliah', $mataKuliah->id_mataKuliah)->first();
+        if ($check) {
+            return redirect('/dashboard/mata-kuliah')->with('errors', 'Tidak bisa menghapus
+            mata kuliah yang masih terkait dengan polling detail.');
+        }
+
         MataKuliah::destroy($mataKuliah->id_mataKuliah);
-        return redirect('/dashboard/mata-kuliah')-> with('success','Mata kuliah Has Been Deleted',);
+        return redirect('/dashboard/mata-kuliah')->with('success', 'Mata kuliah Has Been Deleted',);
     }
 }

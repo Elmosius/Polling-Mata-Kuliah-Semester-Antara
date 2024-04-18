@@ -21,6 +21,13 @@
             <div class="alert alert-success" role="alert" id="myAlert">
                 {{session('success')}}
             </div>
+        @elseif(session()->has('errors'))
+            <div class="alert alert-danger d-flex align-items-center" role="alert" id="myAlert">
+                <div>
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {{session('errors')}}
+                </div>
+            </div>
         @endif
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">
@@ -75,14 +82,17 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Kurikulum</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p class="p-0 pb-1 m-0"> Apakah anda akan menghapus kurikulum ini?</p>
-                            <p class="fst-italic modal-keterangan">Data yang dihapus tidak bisa dikembalikan </p>
+                            <p class="fst-italic modal-keterangan">Data yang dihapus tidak bisa
+                                dikembalikan </p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                            </button>
                             <form method="post" action="" class="d-inline" id="deleteForm">
                                 @method('delete')
                                 @csrf

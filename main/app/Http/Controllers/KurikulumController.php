@@ -24,6 +24,7 @@ class KurikulumController extends Controller
      */
     public function create()
     {
+        $this->authorize('kaprodi');
         return view('kurikulum.create');
     }
 
@@ -32,6 +33,7 @@ class KurikulumController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('kaprodi');
         $validateData = $request->validate([
             'tahun' => 'required|max:4'
         ]);
@@ -53,6 +55,7 @@ class KurikulumController extends Controller
      */
     public function edit(Kurikulum $kurikulum)
     {
+        $this->authorize('kaprodi');
         return view('kurikulum.edit',[
             'data' => $kurikulum
         ]);
@@ -63,6 +66,7 @@ class KurikulumController extends Controller
      */
     public function update(Request $request, Kurikulum $kurikulum)
     {
+        $this->authorize('kaprodi');
         $validateData = $request->validate([
             'tahun' => 'required|max:4',
         ]);
@@ -76,6 +80,14 @@ class KurikulumController extends Controller
      */
     public function destroy(Kurikulum $kurikulum)
     {
+        $this->authorize('kaprodi');
+
+        $check = MataKuliah::where('id_kurikulum', $kurikulum->id_kurikulum)->first();
+        if ($check) {
+            return redirect('/dashboard/kurikulum')->with('errors', 'Tidak bisa menghapus
+            kurikulum yang masih terkait dengan mata kuliah.');
+        }
+
         Kurikulum::destroy($kurikulum->id_kurikulum);
         return redirect('/dashboard/kurikulum')-> with('success','Kurikulum Has Been Deleted',);
     }

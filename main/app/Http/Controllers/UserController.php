@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MataKuliah;
+use App\Models\PollingDetail;
 use App\Models\ProgramStudi;
 use App\Models\Role;
 use App\Models\User;
@@ -91,7 +92,7 @@ class UserController extends Controller
         ]);
 
         if ($request->filled('password') && $request->filled('new_password')) {
-            // jika si passsword diisi
+            // kalo si passsword diisi
             if (!Hash::check($request->password, $user->password)) {
                 return back()->withErrors(['password' => 'Password lama tidak sesuai']);
             }
@@ -102,7 +103,7 @@ class UserController extends Controller
 
             $validateData['password'] = Hash::make($request->new_password);
         } else {
-            // Jika password baru tidak diisi
+            // kalo si password baru tidak diisi
             $validateData['password'] = $user->password;
         }
 
@@ -117,6 +118,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('admin');
+
+        $check = PollingDetail::where('id_user', $user->id_user)->first();
+        if ($check) {
+            return redirect('/dashboard/users')->with('errors', 'Tidak bisa menghapus
+            user yang masih terkait dengan polling detail.');
+        }
         User::destroy($user->id_user);
         return redirect('/dashboard/users')->with('success', 'Account Has Been Deleted',);
     }

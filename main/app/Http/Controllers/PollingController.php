@@ -50,7 +50,7 @@ class PollingController extends Controller
         return view('polling.index', [
             'datas' => $activePollings,
             'mks' => $mks,
-            'now'=> $now,
+            'now' => $now,
             'hasVoted' => $hasVoted
         ]);
     }
@@ -71,22 +71,25 @@ class PollingController extends Controller
      */
     public function store(Request $request)
     {
-        $activePolling = Polling::where('is_active', 1)->first();
-        if ($activePolling) {
-            return redirect('/dashboard/make-polling')->with('errors',
-                'Tidak bisa membuat polling baru karena masih ada polling yang aktif.');
-        }
-
         $validateData = $request->validate([
             'nama_polling' => 'required|max:45',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
-            'is_active' => 'required|max:2'
+            'is_active' => 'required|in:0,1'
         ]);
+
+        if ($validateData['is_active'] == 1) {
+            $activePolling = Polling::where('is_active', 1)->first();
+            if ($activePolling) {
+                return redirect('/dashboard/make-polling')->with('errors',
+                    'Tidak bisa membuat polling baru karena masih ada polling yang aktif.');
+            }
+        }
 
         Polling::create($validateData);
         return redirect('/dashboard/make-polling')->with('success', 'Polling Has Been Created',);
     }
+
 
     /**
      * Display the specified resource.
@@ -137,6 +140,12 @@ class PollingController extends Controller
     public function destroy(Polling $polling)
     {
         $this->authorize('kaprodi');
+        $check = PollingDetail::where('id_polling', $polling->id_polling)->first();
+        if ($check) {
+            return redirect('/dashboard/make-polling')->with('errors', 'Tidak bisa menghapus
+            polling yang masih terkait dengan polling detail.');
+        }
+
         Polling::destroy($polling->id_polling);
         return redirect('/dashboard/make-polling')->with('success', 'Polling Has Been Deleted',);
     }

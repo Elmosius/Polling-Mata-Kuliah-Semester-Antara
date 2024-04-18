@@ -21,6 +21,13 @@
             <div class="alert alert-success" role="alert" id="myAlert">
                 {{session('success')}}
             </div>
+        @elseif(session()->has('errors'))
+            <div class="alert alert-danger d-flex align-items-center" role="alert" id="myAlert">
+                <div>
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {{session('errors')}}
+                </div>
+            </div>
         @endif
 
         <div class="card bg-light-subtle shadow border-0 rounded-3">

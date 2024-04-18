@@ -26,21 +26,17 @@ class PollingDetailController extends Controller
         $jumPolling = "SELECT id_polling
                        FROM polling";
 
-        $mytime = date('Y-m-d');
-
-        $tanggal = "SELECT end_at
-                    FROM polling
-                    WHERE end_at < $mytime";
-
         $jumHasilVoted = DB::select($jumVoted);
         $jumHasilPolling = DB::select($jumPolling);
+
+        $endedPollings = Polling::where('end_at', '<', now())->get();
 
         return view('dashboard.index', [
             'datas' => Polling::where('is_active', 1)->get(),
             'jumlah' => Polling::where('is_active', 1)->count(),
             'hasilVoted' => $jumHasilVoted,
             'hasilPolling' => $jumHasilPolling,
-            'periodEnd' => $tanggal
+            'periodEnd' => $endedPollings
         ]);
     }
 
