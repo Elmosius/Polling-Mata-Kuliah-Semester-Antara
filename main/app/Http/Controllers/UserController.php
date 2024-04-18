@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MataKuliah;
+use App\Models\PollingDetail;
 use App\Models\ProgramStudi;
 use App\Models\Role;
 use App\Models\User;
@@ -41,7 +42,7 @@ class UserController extends Controller
     {
         $this->authorize('admin');
         $validateData = $request->validate([
-            'id_user' => 'required|max:5|unique:users',
+            'id_user' => 'required|max:10|unique:users',
             'nama_user' => 'required|max:45',
             'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:8|max:25',
@@ -82,27 +83,32 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->authorize('admin');
-
         $validateData = $request->validate([
             'nama_user' => 'required|max:45',
-            'password' => 'required|min:8|max:25',
-            'new_password' => 'required|min:8|max:25|confirmed',
+            'password' => 'nullable|min:8|max:25',
+            'new_password' => 'nullable|min:8|max:25|confirmed',
             'id_role' => 'required',
             'id_program_studi' => 'required'
         ]);
 
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->withErrors(['password' => 'Password lama tidak sesuai']);
+        if ($request->filled('password') && $request->filled('new_password')) {
+            // kalo si passsword diisi
+            if (!Hash::check($request->password, $user->password)) {
+                return back()->withErrors(['password' => 'Password lama tidak sesuai']);
+            }
+
+            if (Hash::check($request->new_password, $user->password)) {
+                return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama']);
+            }
+
+            $validateData['password'] = Hash::make($request->new_password);
+        } else {
+            // kalo si password baru tidak diisi
+            $validateData['password'] = $user->password;
         }
 
-        if (Hash::check($request->new_password, $user->password)) {
-            return back()->withErrors(['new_password' => 'Password baru tidak boleh sama dengan password lama']);
-        }
-
-        $user->password = Hash::make($request->new_password);
-        $user->save();
         $user->update($validateData);
-        return redirect('/dashboard/users')->with('success', 'Password telah diperbarui');
+        return redirect('/dashboard/users')->with('success', 'Pengguna telah diperbarui');
     }
 
 
@@ -112,6 +118,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('admin');
+
+        $check = PollingDetail::where('id_user', $user->id_user)->first();
+        if ($check) {
+            return redirect('/dashboard/users')->with('errors', 'Tidak bisa menghapus
+            user yang masih terkait dengan polling detail.');
+        }
         User::destroy($user->id_user);
         return redirect('/dashboard/users')->with('success', 'Account Has Been Deleted',);
     }

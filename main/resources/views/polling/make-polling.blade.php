@@ -5,14 +5,16 @@
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center my-3 pt-3 ps-3 pb-2 dashboard rounded-1">
             <div>
-                <h1>Buat Polling</h1>
+                <h1>Buat Rencana Polling</h1>
             </div>
-            <div class="pe-3">
-                <a href="/dashboard/polling/create" class="btn btn-success d-flex gap-2">
-                    <i class="bi bi-journal-plus"></i>
-                    <span>Create Polling Baru</span>
-                </a>
-            </div>
+            @can('kaprodi')
+                <div class="pe-3">
+                    <a href="/dashboard/polling/create" class="btn btn-success d-flex gap-2">
+                        <i class="bi bi-journal-plus"></i>
+                        <span>Create Polling Baru</span>
+                    </a>
+                </div>
+            @endcan
         </div>
 
         @if(session()->has('success'))
@@ -32,33 +34,38 @@
                 <table class="table table-striped table-sm ">
                     <thead>
                     <tr>
-                        <th scope="col">Nomor Polling</th>
+                        <th scope="col">Nama Polling</th>
                         <th scope="col">Periode</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
+                        @can('kaprodi')
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        @endcan
                     </tr>
                     @foreach($datas as $pol)
                         <tr>
-                            <td>{{$pol->id_polling}}</td>
+                            <td>{{$pol->nama_polling}}</td>
                             <td>
-                                {{ \Carbon\Carbon::parse($pol->start_at)->format('Y-m-d') }}
-                                - {{ \Carbon\Carbon::parse($pol->end_at)->format('Y-m-d') }}
+                                {{ \Carbon\Carbon::parse($pol->start_at)->format('d F Y') }}
+                                - {{ \Carbon\Carbon::parse($pol->end_at)->format('d F Y') }}
                             </td>
                             <td>{{ $pol->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
-                            <td>
-                                <a href="/dashboard/polling/{{$pol->id_polling}}/edit" class="btn btn-warning pt-0 pb-1 px-2">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger pt-0 pb-1 px-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="{{$pol->id_polling}}">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
-                            </td>
+                            @can('kaprodi')
+                                <td>
+                                    <a href="/dashboard/polling/{{$pol->id_polling}}/edit"
+                                       class="btn btn-warning pt-0 pb-1 px-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger pt-0 pb-1 px-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="{{$pol->id_polling}}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>

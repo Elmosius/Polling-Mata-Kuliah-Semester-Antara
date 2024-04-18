@@ -25,7 +25,7 @@ class PollingController extends Controller
             ->where('end_at', '>=', $now)
             ->first();
 
-        $admin = $user->role->nama_role != 'admin' && $user->role->nama_role != 'kaprodi';
+        $mahasiswa = $user->role->nama_role != 'admin' && $user->role->nama_role != 'kaprodi';
         if ($activePollings) {
             $hasVoted = PollingDetail::where('id_user', $user->id_user)
                 ->where('id_polling', $activePollings->id_polling)
@@ -34,14 +34,14 @@ class PollingController extends Controller
             $hasVoted = false;
         }
 
-        if ($hasVoted && $admin) {
-            return view('polling.index', [
-                'datas' => null,
-                'mks' => null,
-            ])->with('success', 'Terima kasih sudah melakukan polling');
-        }
+//        if ($hasVoted) {
+//            return view('polling.index', [
+//                'datas' => null,
+//                'mks' => null,
+//            ])->with('success', 'Terima kasih sudah melakukan polling');
+//        }
 
-        if ($admin) {
+        if ($mahasiswa) {
             $mks = MataKuliah::where('id_program_studi', $user->id_program_studi)->get();
         } else {
             $mks = MataKuliah::all();
@@ -50,9 +50,10 @@ class PollingController extends Controller
         return view('polling.index', [
             'datas' => $activePollings,
             'mks' => $mks,
+            'now' => $now,
+            'hasVoted' => $hasVoted
         ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -70,22 +71,25 @@ class PollingController extends Controller
      */
     public function store(Request $request)
     {
-        $activePolling = Polling::where('is_active', 1)->first();
-        if ($activePolling) {
-            return redirect('/dashboard/make-polling')->with('errors',
-                'Tidak bisa membuat polling baru karena masih ada polling yang aktif.');
-        }
-
         $validateData = $request->validate([
-            'id_polling' => 'required|max:5|unique:polling',
+            'nama_polling' => 'required|max:45',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
-            'is_active' => 'required|max:2'
+            'is_active' => 'required|in:0,1'
         ]);
+
+        if ($validateData['is_active'] == 1) {
+            $activePolling = Polling::where('is_active', 1)->first();
+            if ($activePolling) {
+                return redirect('/dashboard/make-polling')->with('errors',
+                    'Tidak bisa membuat polling baru karena masih ada polling yang aktif.');
+            }
+        }
 
         Polling::create($validateData);
         return redirect('/dashboard/make-polling')->with('success', 'Polling Has Been Created',);
     }
+
 
     /**
      * Display the specified resource.
@@ -119,6 +123,7 @@ class PollingController extends Controller
         }
 
         $validateData = $request->validate([
+            'nama_polling' => 'required|max:45',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'is_active' => 'required|max:2'
@@ -135,13 +140,18 @@ class PollingController extends Controller
     public function destroy(Polling $polling)
     {
         $this->authorize('kaprodi');
+        $check = PollingDetail::where('id_polling', $polling->id_polling)->first();
+        if ($check) {
+            return redirect('/dashboard/make-polling')->with('errors', 'Tidak bisa menghapus
+            polling yang masih terkait dengan polling detail.');
+        }
+
         Polling::destroy($polling->id_polling);
         return redirect('/dashboard/make-polling')->with('success', 'Polling Has Been Deleted',);
     }
 
     public function hasil()
     {
-        $this->authorize('kaprodi');
         return view('polling.hasil', [
             'datas' => Polling::with('pollingDetail')->get(),
         ]);
@@ -149,7 +159,6 @@ class PollingController extends Controller
 
     public function makePolling()
     {
-        $this->authorize('kaprodi');
         return view('polling.make-polling', [
             'datas' => Polling::with('pollingDetail')->get(),
         ]);

@@ -16,6 +16,7 @@ class Polling extends Model
 
     protected $fillable = [
         'id_polling',
+        'nama_polling',
         'start_at',
         'end_at',
         'is_active',

@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('polling_detail', function (Blueprint $table) {
-            $table->string('id_polling',5);
-            $table->foreign('id_polling',5)->references('id_polling')->on('polling')->onDelete('cascade');
-            $table->string('id_user',5);
-            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_polling');
+            $table->foreign('id_polling')->references('id_polling')->on('polling')
+                ->onUpdate('cascade')->onDelete('restrict');
+            $table->string('id_user',10);
+            $table->foreign('id_user')->references('id_user')->on('users')
+                ->onUpdate('cascade')->onDelete('restrict');
             $table->string('id_mataKuliah',10);
-            $table->foreign('id_mataKuliah')->references('id_mataKuliah')->on('mata_kuliah');
+            $table->foreign('id_mataKuliah')->references('id_mataKuliah')->on('mata_kuliah')
+                ->onUpdate('cascade')->onDelete('restrict');;
             $table->timestamps();
         });
     }

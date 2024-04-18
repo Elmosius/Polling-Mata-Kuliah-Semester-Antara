@@ -14,7 +14,7 @@
                         Dashboard
                     </a>
                 </li>
-                @can('kaprodi')
+                @canany(['admin', 'kaprodi'])
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 {{Request::is('dashboard/users') ? 'active': ''}}"
                            href="/dashboard/users">
@@ -22,8 +22,8 @@
                             User
                         </a>
                     </li>
-                @endcan
-                @can('kaprodi')
+                @endcanany
+                @canany(['admin', 'kaprodi'])
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 {{Request::is('dashboard/mata-kuliah') ? 'active': ''}}"
                            href="/dashboard/mata-kuliah">
@@ -31,7 +31,14 @@
                             Mata Kuliah
                         </a>
                     </li>
-                @endcan
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2 {{Request::is('dashboard/kurikulum') ? 'active': ''}}"
+                           href="/dashboard/kurikulum">
+                            <i class="bi bi-list-task pb-4"></i>
+                            Kurikulum
+                        </a>
+                    </li>
+                @endcanany
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center collapsed gap-2 {{Request::is('dashboard/polling')? 'active': ''}}"
                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
@@ -47,7 +54,7 @@
                                     <span>Lihat Polling</span>
                                 </a>
                             </li>
-                            @can('kaprodi')
+                            @canany(['admin', 'kaprodi'])
                                 <li>
                                     <a href="/dashboard/make-polling"
                                        class="nav-link d-flex align-items-center collapsed gap-2">
@@ -62,7 +69,7 @@
                                         <span> Hasil Polling </span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcanany
                         </ul>
                     </div>
                 </li>

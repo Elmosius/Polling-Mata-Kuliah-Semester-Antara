@@ -26,12 +26,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Kurikulum::create([
-            'id_kurikulum' => '1',
             'tahun' => '2019'
         ]);
 
         Kurikulum::create([
-            'id_kurikulum' => '2',
             'tahun' => '2020'
         ]);
 
@@ -78,22 +76,6 @@ class DatabaseSeeder extends Seeder
             'id_role' => '2',
             'id_program_studi' => NULL
         ]);
-
-        semester::create([
-            'id_semester' => '1',
-            'semester' => 'SA-1'
-        ]);
-
-        semester::create([
-            'id_semester' => '2',
-            'semester' => 'SA-2'
-        ]);
-
-        semester::create([
-            'id_semester' => '3',
-            'semester' => 'SA-3'
-        ]);
-
 
 
 

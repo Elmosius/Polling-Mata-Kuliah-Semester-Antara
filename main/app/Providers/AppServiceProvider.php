@@ -27,7 +27,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('kaprodi', function (User $user) {
-            return ($user->id_role === '2' || $user->id_role === '1');
+            return ($user->id_role === '2');
+        });
+
+        Gate::define('adminorkaprodi', function (User $user) {
+            return ($user->id_role !== '3');
         });
 
         Paginator::useBootstrapFive();

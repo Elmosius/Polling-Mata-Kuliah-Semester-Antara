@@ -7,17 +7,26 @@
             <div>
                 <h1>Mata Kuliah</h1>
             </div>
-            <div class="pe-3">
-                <a href="/dashboard/mata-kuliah/create" class="btn btn-success d-flex">
-                    <i class="bi bi-folder-plus"></i>
-                    <span class="ps-2">Add Mata Kuliah</span>
-                </a>
-            </div>
+            @can('kaprodi')
+                <div class="pe-3">
+                    <a href="/dashboard/mata-kuliah/create" class="btn btn-success d-flex">
+                        <i class="bi bi-folder-plus"></i>
+                        <span class="ps-2">Add Mata Kuliah</span>
+                    </a>
+                </div>
+            @endcan
         </div>
 
         @if(session()->has('success'))
             <div class="alert alert-success" role="alert" id="myAlert">
                 {{session('success')}}
+            </div>
+        @elseif(session()->has('errors'))
+            <div class="alert alert-danger d-flex align-items-center" role="alert" id="myAlert">
+                <div>
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    {{session('errors')}}
+                </div>
             </div>
         @endif
 
@@ -32,11 +41,12 @@
                         <th scope="col">Kode Mata Kuliah</th>
                         <th scope="col">Nama</th>
                         <th scope="col">SKS</th>
-                        <th scope="col">Semester</th>
                         <th scope="col">Kode - Nama Program Studi</th>
                         <th scope="col">Tahun</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
+                        @can('kaprodi')
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        @endcan
 
                     </tr>
                     </thead>
@@ -46,23 +56,24 @@
                             <td>{{$mk->id_mataKuliah}}</td>
                             <td>{{$mk->nama_mataKuliah}}</td>
                             <td>{{$mk->sks}}</td>
-                            <td>{{$mk->semester->semester}}</td>
                             <td>{{$mk->id_program_studi}} - {{$mk->programStudi->nama_program_studi}}</td>
                             <td>{{$mk->kurikulum->tahun}}</td>
-                            <td>
-                                <a href="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}/edit"
-                                   class="btn btn-warning pt-0 pb-1 px-2">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-danger pt-0 pb-1 px-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="{{$mk->id_mataKuliah}}">
-                                    <i class="bi bi-trash3-fill"></i>
-                                </button>
-                            </td>
+                            @can('kaprodi')
+                                <td>
+                                    <a href="/dashboard/mata-kuliah/{{$mk->id_mataKuliah}}/edit"
+                                       class="btn btn-warning pt-0 pb-1 px-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger pt-0 pb-1 px-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="{{$mk->id_mataKuliah}}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                     </tbody>
