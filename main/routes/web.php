@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-chart', [PollingDetailController::class, 'getChart'])
         ->name('get-chart');
 
+    Route::get('/get-polling-matakuliah', [PollingDetailController::class, 'getPollingMataKuliah'])
+        ->name('get-polling-matakuliah');
+
     Route::resource('/dashboard/polling', \App\Http\Controllers\PollingController::class)
     ->except(['show']);
 

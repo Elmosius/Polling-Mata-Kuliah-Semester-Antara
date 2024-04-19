@@ -18,6 +18,7 @@ class PollingDetailController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
 
         $jumVoted = "SELECT id_user
                      FROM polling_detail
@@ -25,6 +26,21 @@ class PollingDetailController extends Controller
 
         $jumPolling = "SELECT id_polling
                        FROM polling";
+
+        $dataHistoryDetail = "";
+        $dataHistoryMK = "";
+
+        if ( $user->id_role == 3 ) {
+
+            $historyDetail = "SELECT p.id_polling, p.nama_polling, p.start_at, p.end_at
+                            FROM polling p, polling_detail pd
+                            WHERE pd.id_polling = p.id_polling
+                            AND pd.id_user = $user->id_user
+                            GROUP BY p.id_polling, p.nama_polling, p.start_at, p.end_at
+                            ORDER BY p.id_polling";
+
+            $dataHistoryDetail = DB::select($historyDetail);
+        }
 
         $jumHasilVoted = DB::select($jumVoted);
         $jumHasilPolling = DB::select($jumPolling);
@@ -36,7 +52,8 @@ class PollingDetailController extends Controller
             'jumlah' => Polling::where('is_active', 1)->count(),
             'hasilVoted' => $jumHasilVoted,
             'hasilPolling' => $jumHasilPolling,
-            'periodEnd' => $endedPollings
+            'periodEnd' => $endedPollings,
+            'histories' => $dataHistoryDetail
         ]);
     }
 
@@ -67,6 +84,22 @@ class PollingDetailController extends Controller
             'jumlah' => $arrayJumlahMk
         ];
         return $dataa;
+    }
+
+    public function getPollingMataKuliah(Request $request)
+    {
+        $user = auth()->user();
+        $historyMatkul = "SELECT pd.id_polling, pd.id_user, mk.nama_mataKuliah, mk.sks
+                          FROM polling_detail pd, mata_kuliah mk
+                          WHERE pd.id_mataKuliah = mk.id_mataKuliah
+                            AND pd.id_polling = ".$request->idPolling."
+                            AND pd.id_user = ".$user->id_user;
+
+        $dataHistoryMatkul = DB::select($historyMatkul);
+
+        // $dataPollingDetail = PollingDetail::where('id_polling', $request->idPolling)->where('id_user', $user->id_user)->get();
+
+        return response()->json($dataHistoryMatkul);
     }
 
 
