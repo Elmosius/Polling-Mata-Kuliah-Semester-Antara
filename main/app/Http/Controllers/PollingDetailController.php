@@ -9,6 +9,7 @@ use App\Models\PollingDetail;
 use App\Models\semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 //use Illuminate\Support\Carbon;
 
 class PollingDetailController extends Controller
@@ -18,30 +19,39 @@ class PollingDetailController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $dataHistoryDetail = '';
+        if ($user->id_role == 3) {
+            $dataHistoryDetail = Polling::with(['pollingDetail', 'pollingDetail.mataKuliah'])
+                ->whereHas('pollingDetail', function ($query) use ($user) {
+                    $query->where('id_user', $user->id_user);
+                })
+                ->orderBy('id_polling')
+                ->get();
+        }
 
-        $jumVoted = "SELECT id_user
-                     FROM polling_detail
-                     GROUP BY id_user";
-
-        $jumPolling = "SELECT id_polling
-                       FROM polling";
-
-        $jumHasilVoted = DB::select($jumVoted);
-        $jumHasilPolling = DB::select($jumPolling);
-
+        $jumHasilVoted = PollingDetail::select('id_user')->groupBy('id_user')->get();
+        $jumHasilPolling = Polling::all();
         $endedPollings = Polling::where('end_at', '<', now())->get();
 
         return view('dashboard.index', [
-            'datas' => Polling::where('is_active', 1)->get(),
+            'datas' => Polling::where('is_active', 1)->with('pollingDetail')->get(),
             'jumlah' => Polling::where('is_active', 1)->count(),
             'hasilVoted' => $jumHasilVoted,
             'hasilPolling' => $jumHasilPolling,
-            'periodEnd' => $endedPollings
+            'periodEnd' => $endedPollings,
+            'histories' => $dataHistoryDetail
         ]);
     }
 
+
     public function getChart()
     {
+        $dataPollingDetail = PollingDetail::with('polling', 'mataKuliah')
+            ->select('id_mataKuliah')
+            ->groupBy('id_mataKuliah')
+            ->get();
+
         $arrayJumlahMk = [];
         $arrayLabelMk = [];
         $index = 0;
@@ -67,8 +77,9 @@ class PollingDetailController extends Controller
             'jumlah' => $arrayJumlahMk
         ];
         return $dataa;
-    }
 
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -208,6 +219,17 @@ class PollingDetailController extends Controller
         return redirect('/dashboard/polling')->with('success', 'Update polling berhasil!',);
     }
 
+    public function getHistory($id_polling)
+    {
+        $user = auth()->user();
+
+        $history = PollingDetail::with('mataKuliah')
+            ->where('id_polling', $id_polling)
+            ->where('id_user', $user->id_user)
+            ->get();
+
+        return response()->json($history);
+    }
 
     /**
      * Remove the specified resource from storage.
