@@ -61,6 +61,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <p class="fw-semibold">
+                        Total Peserta : {{$pol->pollingDetail->groupBy('id_user')->count()}}
+                    </p>
                 </div>
             @endforeach
         @endif
