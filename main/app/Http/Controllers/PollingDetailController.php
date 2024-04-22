@@ -56,9 +56,19 @@ class PollingDetailController extends Controller
         $arrayLabelMk = [];
         $index = 0;
 
+        $dataPollingDetail = PollingDetail::select("id_mataKuliah")->groupBy("id_mataKuliah")->pluck("id_mataKuliah")->toArray();
+
+        $sqlJumlahMk = "SELECT mk.nama_mataKuliah, count(pd.id_mataKuliah) jumlah_mataKuliah
+                        FROM polling p, polling_detail pd, mata_kuliah mk
+                        WHERE pd.id_polling = p.id_polling
+                            AND pd.id_mataKuliah = mk.id_mataKuliah
+                        GROUP BY pd.id_mataKuliah, mk.nama_mataKuliah";
+
+        $datajumlahMk = DB::select($sqlJumlahMk);
+
         foreach ($dataPollingDetail as $pd) {
-            $arrayJumlahMk[$index] = $pd->mataKuliah->count();
-            $arrayLabelMk[$index] = $pd->mataKuliah->nama_mataKuliah;
+            $arrayJumlahMk[$index] = $datajumlahMk[$index]->jumlah_mataKuliah;
+            $arrayLabelMk[$index] = $datajumlahMk[$index]->nama_mataKuliah;
             $index += 1;
         }
 
@@ -67,6 +77,8 @@ class PollingDetailController extends Controller
             'jumlah' => $arrayJumlahMk
         ];
         return $dataa;
+
+
     }
 
     /**
@@ -207,6 +219,17 @@ class PollingDetailController extends Controller
         return redirect('/dashboard/polling')->with('success', 'Update polling berhasil!',);
     }
 
+    public function getHistory($id_polling)
+    {
+        $user = auth()->user();
+
+        $history = PollingDetail::with('mataKuliah')
+            ->where('id_polling', $id_polling)
+            ->where('id_user', $user->id_user)
+            ->get();
+
+        return response()->json($history);
+    }
 
     /**
      * Remove the specified resource from storage.

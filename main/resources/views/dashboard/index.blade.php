@@ -20,8 +20,9 @@
         @endif
 
         @if( auth()->user()->id_role != 3 )
+
             @if($jumlah != 0)
-                <div class="card bg-light-subtle shadow border-0 rounded-3">
+                <div class="card bg-light-subtle shadow border-0 rounded-3 mb-4">
                     <div class="border-bottom ps-3 pt-3">
                         <p class="fw-semibold">Ongoing Polling</p>
                     </div>
@@ -48,7 +49,7 @@
                                         {{ \Carbon\Carbon::parse($pol->end_at)->format('d F Y') }}
                                     </td>
                                     <td>
-                                        <a href="/dashboard/polling"
+                                        <a href="/dashboard/polling-hasil"
                                            class="text-decoration-none badge bg-dark ms-1">
                                             <i class="bi bi-box-arrow-up-right"></i></a>
                                     </td>
@@ -59,16 +60,11 @@
                     </div>
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-info mb-4" role="alert">
                     Tidak ada polling yang dibuka.
                 </div>
             @endif
-
-            <div id="chartPembungkus" style="padding: 70px">
-                <canvas id="myChart"></canvas>
-            </div>
-
-            <div class="container text-center">
+            <div class="container text-center px-0 mb-4">
                 <div class="row">
                     <div class="col">
                         <div class="info-box mb-3">
@@ -80,7 +76,7 @@
                             </svg></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Students who voted</span>
+                                <span class="info-box-text">Mahasiswa yang telah voting</span>
                                 <span class="info-box-number">{!! count($hasilVoted) !!}
                                 </span>
                             </div>
@@ -99,7 +95,7 @@
                             </svg></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Polling that have been created</span>
+                                <span class="info-box-text">Polling yang telah dibuat</span>
                                 <span class="info-box-number">{!! count($hasilPolling) !!}</span>
                             </div>
 
@@ -115,12 +111,16 @@
                             </svg></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Polling period has ended</span>
+                                <span class="info-box-text">Periode polling telah selesai</span>
                                 <span class="info-box-number">{!! count($periodEnd) !!}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="" id="chartPembungkus" style="padding: 70px; padding-top: 0px">
+                <canvas id="myChart"></canvas>
             </div>
 
             <script>
@@ -166,46 +166,48 @@
                 <div class="border-bottom ps-3 pt-3">
                     <p class="fw-semibold">History Polling</p>
                 </div>
-                <table class="table table-striped table-sm mt-1">
-                    <thead>
-                    <tr>
-                        <th scope="col">Polling name</th>
-                        <th scope="col">Start date</th>
-                        <th scope="col">End date</th>
-                        <th scope="col">View Detail</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($histories as $history)
+                <div class="table-responsive small px-3">
+                    <table class="table table-striped table-sm mt-1">
+                        <thead>
                         <tr>
-                            <td>
-                                {{ $history->nama_polling }}
-                            </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($history->start_at)->format('d F Y') }}
-                            </td>
-                            <td>
-                                {{ \Carbon\Carbon::parse($history->end_at)->format('d F Y') }}
-                            </td>
-                            <td>
-                                <a class="text-decoration-none badge bg-dark ms-1 btn_detail"
-                                   data-bs-toggle="modal"
-                                   data-bs-target="#detail"
-                                   data-id={{ $history->id_polling }} >
-                                    <i class="bi bi-box-arrow-up-right"></i>
-                                </a>
-                            </td>
+                            <th scope="col">Polling name</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">End date</th>
+                            <th scope="col">View Detail</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @foreach($histories as $history)
+                            <tr>
+                                <td>
+                                    {{ $history->nama_polling }}
+                                </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($history->start_at)->format('d F Y') }}
+                                </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($history->end_at)->format('d F Y') }}
+                                </td>
+                                <td>
+                                    <a class="text-decoration-none badge bg-dark ms-1 btn_detail"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#detail"
+                                       data-id_polling={{ $history->id_polling }} >
+                                        <i class="bi bi-box-arrow-up-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
 
             <!-- Modal -->
             <div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">History Mata Kuliah</h1>
@@ -220,33 +222,13 @@
                                     <th scope="col">Program Studi</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @php
-                                $totalSks = 0
-                                @endphp
-                                @foreach($histories as $history)
-                                    @foreach($history->pollingDetail as $detail)
-                                        @php
-                                            $totalSks += $detail->mataKuliah->sks
-                                        @endphp
-                                        <tr>
-                                            <td>
-                                                {{ $detail->mataKuliah->id_mataKuliah}} -
-                                                {{ $detail->mataKuliah->nama_mataKuliah}}
-                                            </td>
-                                            <td>
-                                                {{ $detail->mataKuliah->sks}}
-                                            </td>
-                                            <td>
-                                                {{ $detail->mataKuliah->id_program_studi}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endforeach
+                                <tbody id="history-details">
+
                                 </tbody>
                             </table>
-                            <p>Total SKS: {{$totalSks}}</p>
+                            <p>Total SKS: <span id="total-sks"></span></p>
                         </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
@@ -254,12 +236,39 @@
                 </div>
             </div>
 
+            <script>
+                $(document).on("click", ".btn_detail", function () {
+                    let id_polling = $(this).data('id_polling');
+                    console.log(id_polling);
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ url('/get-history') }}/" + id_polling,
+                        dataType: 'json',
+                        success: function (response) {
+                            $("#history-details").empty();
+
+                            $.each(response, function (index, detail) {
+                                $("#history-details").append(`
+                    <tr>
+                        <td>${detail.mata_kuliah.id_mataKuliah} - ${detail.mata_kuliah.nama_mataKuliah}</td>
+                        <td>${detail.mata_kuliah.sks}</td>
+                        <td>${detail.mata_kuliah.id_program_studi}</td>
+                    </tr>
+                `);
+                            });
+                            totalSks = response.reduce((acc, curr) => acc + parseInt(curr.mata_kuliah.sks), 0);
+                            $("#total-sks").text(totalSks);
+                        }
+                    });
+                });
+            </script>
+
             <div class="container" id="history-div">
 
             </div>
         @endif
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></SCRIPT>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     </main>
 @endsection

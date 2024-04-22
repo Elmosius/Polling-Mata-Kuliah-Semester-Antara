@@ -91,7 +91,7 @@ class UserController extends Controller
             'id_program_studi' => 'required'
         ]);
 
-        if ($request->filled('password') && $request->filled('new_password')) {
+        if ($request->filled('password') || $request->filled('new_password')) {
             // kalo si passsword diisi
             if (!Hash::check($request->password, $user->password)) {
                 return back()->withErrors(['password' => 'Password lama tidak sesuai']);
