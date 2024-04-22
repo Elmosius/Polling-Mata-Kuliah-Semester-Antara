@@ -34,7 +34,7 @@
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 {{Request::is('dashboard/kurikulum') ? 'active': ''}}"
                            href="/dashboard/kurikulum">
-                            <i class="bi bi-list-task pb-4"></i>
+                            <i class="bi bi-calendar2-date pb-4"></i>
                             Kurikulum
                         </a>
                     </li>

@@ -52,6 +52,9 @@
                 @endforeach
                 </tbody>
             </table>
+                <p>
+                    Total User yang sudah melakukan Polling : {{$datas->count()}}
+                </p>
         </div>
     </main>
 @endsection

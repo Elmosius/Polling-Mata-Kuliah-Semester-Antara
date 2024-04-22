@@ -45,7 +45,8 @@ class UserController extends Controller
             'id_user' => 'required|max:10|unique:users',
             'nama_user' => 'required|max:45',
             'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:8|max:25',
+            'password' => 'required|min:8|max:25|confirmed',
+            'password_confirmation'=>'required',
             'id_role' => 'required',
             'id_program_studi' => 'required'
         ]);
@@ -91,7 +92,7 @@ class UserController extends Controller
             'id_program_studi' => 'required'
         ]);
 
-        if ($request->filled('password') && $request->filled('new_password')) {
+        if ($request->filled('password') || $request->filled('new_password')) {
             // kalo si passsword diisi
             if (!Hash::check($request->password, $user->password)) {
                 return back()->withErrors(['password' => 'Password lama tidak sesuai']);

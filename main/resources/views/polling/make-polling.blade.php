@@ -105,9 +105,9 @@
     <script>
         $(document).ready(function () {
             $('#deleteModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var id = button.data('id');
-                var formAction = "/dashboard/polling/" + id;
+                let button = $(event.relatedTarget);
+                let id = button.data('id');
+                let formAction = "/dashboard/polling/" + id;
                 $('#deleteForm').attr('action', formAction);
             });
         });

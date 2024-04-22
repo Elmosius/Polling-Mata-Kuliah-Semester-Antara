@@ -72,7 +72,7 @@
     <script>
         $(document).ready(function () {
             $('.mata-kuliah').change(function () {
-                var total = 0;
+                let total = 0;
                 $('.mata-kuliah:checked').each(function () {
                     total += parseInt($(this).data('sks'));
                 });

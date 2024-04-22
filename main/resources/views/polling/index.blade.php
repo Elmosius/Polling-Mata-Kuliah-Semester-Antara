@@ -69,12 +69,18 @@
                 </form>
                 @elseif($hasVoted)
                     @if($now->greaterThan($datas->start_at) && $now->lessThan($datas->end_at))
-                        <h6 class="fw-semibold">
-                            Periode buka: {{ \Carbon\Carbon::parse($datas->start_at)->format('d F Y') }}
-                            - {{ \Carbon\Carbon::parse($datas->end_at)->format('d F Y') }}
-                        </h6>
-                        <a class="btn btn-primary"
-                           href="/dashboard/polling-detail/{{$datas->id_polling}}/edit">Edit Polling</a>
+                        <div class="card bg-light-subtle shadow border-0 rounded-3">
+                            <div class="ps-3 pt-3">
+                                <h6 class="fw-semibold">
+                                    Periode buka: {{ \Carbon\Carbon::parse($datas->start_at)->format('d F Y') }}
+                                    - {{ \Carbon\Carbon::parse($datas->end_at)->format('d F Y') }}
+                                </h6></div>
+                            <div class="px-3 py-3">
+                                <p class="pe-3">Kamu telah memilih! Tekan tombol ini untuk mengubah pilihan mu:</p>
+                                <a class="btn btn-primary"
+                                   href="/dashboard/polling-detail/{{$datas->id_polling}}/edit">Edit Polling</a>
+                            </div>
+                        </div>
                     @endif
                 @else
                     <div class="alert alert-info" role="alert">
@@ -89,7 +95,7 @@
     <script>
         $(document).ready(function () {
             $('.mata-kuliah').change(function () {
-                var total = 0;
+                let total = 0;
                 $('.mata-kuliah:checked').each(function () {
                     total += parseInt($(this).data('sks'));
                 });

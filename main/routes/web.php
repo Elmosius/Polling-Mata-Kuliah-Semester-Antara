@@ -28,12 +28,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-chart', [PollingDetailController::class, 'getChart'])
         ->name('get-chart');
 
+    Route::get('/get-polling-matakuliah', [PollingDetailController::class, 'getPollingMataKuliah'])
+        ->name('get-polling-matakuliah');
+
     Route::resource('/dashboard/polling', \App\Http\Controllers\PollingController::class)
-    ->except(['show']);
+        ->except(['show']);
 
     Route::resource('/dashboard/polling-detail',
         \App\Http\Controllers\PollingDetailController::class)->except(['show', 'create', 'destroy']);
 
+    Route::get('/get-history/{id_polling}', [PollingDetailController::class, 'getHistory']);
 //    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //
 //    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -41,15 +45,14 @@ Route::middleware('auth')->group(function () {
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-
 });
 
 Route::middleware('adminorkaprodi')->group(function () {
     Route::resource('/dashboard/mata-kuliah', \App\Http\Controllers\MataKuliahController::class)
-    ->except('show');
+        ->except('show');
 
     Route::resource('/dashboard/kurikulum', \App\Http\Controllers\KurikulumController::class)
-    ->except('show');
+        ->except('show');
 
     Route::resource('/dashboard/users', \App\Http\Controllers\UserController::class)
         ->except('show');
