@@ -33,6 +33,7 @@
                     <p class="fw-semibold">
                         Nama Polling : {{$pol->nama_polling}}
                     </p>
+
                     <div class="small col-lg-10">
                         <table class="table table-striped table-sm border rounded-3">
                             <thead>
@@ -61,6 +62,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <p class="fw-semibold">
+                        Total Peserta : {{$pol->pollingDetail->groupBy('id_user')->count()}}
+                    </p>
                 </div>
             @endforeach
         @endif
