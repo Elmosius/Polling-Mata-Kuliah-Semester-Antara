@@ -1,7 +1,4 @@
-# 🚀 PWL - Tugas Besar UTS
-
-
-> ### Membuat sebuah Polling Matakuliah Semester Antara
+# 🚀 Polling Mata Kuliah Semester Antara
 
 Selamat datang di repositori GitHub kami untuk Tugas Besar Ujian Tengah Semester mata kuliah Pemrograman Web Lanjut. Kami adalah Kelompok 4 yang terdiri dari:
 
